@@ -193,7 +193,7 @@ body {
   transition: 0.2s ease;
 }
 .header__nav-list li a:hover {
-  color: rgb(51, 144, 236);
+  color: #ff9800;
 }
 .header__burger {
   display: none;
@@ -416,7 +416,7 @@ body {
   border-color: rgb(51, 144, 236);
 }
 .form__btn {
-  color: rgb(51, 144, 236);
+  color: #ff9800;
   text-transform: uppercase;
   font-weight: 500;
   font-size: 20px;
@@ -515,18 +515,18 @@ body {
 }
 .result__count span {
   font-size: 20px;
-  color: rgb(51, 144, 236);
+  color: #ff9800;
 }
 .result.active {
   display: flex !important;
 }
 .result__btn {
-  background: rgb(51, 144, 236);
-  color: #FFF;
+  background: #ff9800;
+  color: #9e9e9e;
   margin-top: 20px;
 }
 .result__btn:hover {
-  background: rgb(35, 119, 203);
+  background: #f57c00;
 }/*# sourceMappingURL=style.css.map */
 
 .part{
@@ -547,12 +547,12 @@ body {
 }
 .part__ideas h3{
     font-size: 30px;
-    color: #fff;
+    color: #4f9afe;
     font-weight: 700;
 }
 .part__ideas p{
     font-size: 18px;
-    color: #fff;
+    color: #4f9afe;
     padding-top: 5px;
     max-width: 500px;
 }
@@ -574,7 +574,7 @@ body {
     padding-left: 10px;
 }
 .part__btn a:last-child{
-    color: #fff;
+    color: #4f9afe;
     font-weight: 600;
 }
 .part__btn a:last-child i{
