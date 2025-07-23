@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionContents = document.querySelectorAll('.section-content');
 
     // --- 1. Start Screen Logic ---
+    // Ensure start screen is visible initially for animation
+    startScreen.classList.add('active');
     setTimeout(() => {
         startScreen.classList.add('fade-out');
         startScreen.addEventListener('animationend', () => {
@@ -22,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 3. Bottom Navigation Tab Switching ---
+    // Set initial active section to Rolls
+    document.getElementById('content-rolls').classList.add('active-section');
     bottomNavTabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const targetSectionId = tab.dataset.section;
@@ -56,21 +60,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const referralAfterCodeMessage = document.querySelector('.referral-after-code-message');
     const loadingAnimation = document.querySelector('.loading-animation');
     const checkmarkAnimation = document.querySelector('.checkmark-animation');
+    const spinningWheel = document.querySelector('.spinning-wheel');
     const tonConnectUI = new TonConnectUI({
-        manifestUrl: 'https://raw.githubusercontent.com/ton-community/tutorials/main/03-client-side-dapp/tonconnect-manifest.json',
-        // This is a placeholder for the actual wallet connect logic.
-        // In a real dapp, you would handle connection status and events here.
+        manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json', // Corrected manifest URL
+    });
+
+    // Handle TonConnectUI connection status
+    tonConnectUI.onStatusChange(wallet => {
+        if (wallet) {
+            rollsInfoText.textContent = 'Wallet connected! Pay 2 TON to spin the wheel.';
+            connectWalletBtnRolls.classList.add('hide');
+            payForRollsBtn.classList.remove('hide');
+            // You can get wallet address here: wallet.account.address
+            // console.log('Connected wallet address:', wallet.account.address);
+        } else {
+            rollsInfoText.textContent = 'Connect your TON wallet to participate.';
+            connectWalletBtnRolls.classList.remove('hide');
+            payForRollsBtn.classList.add('hide');
+            codeEntrySection.classList.add('hide'); // Hide code entry if disconnected
+            referralAfterCodeMessage.classList.add('hide'); // Hide referral message if disconnected
+        }
     });
 
     connectWalletBtnRolls.addEventListener('click', async () => {
         try {
             await tonConnectUI.openModal();
-            // Simulate successful connection
-            if (tonConnectUI.connected) {
-                rollsInfoText.textContent = 'Wallet connected! Pay 2 TON to spin the wheel.';
-                connectWalletBtnRolls.classList.add('hide');
-                payForRollsBtn.classList.remove('hide');
-            }
+            // Status change is handled by onStatusChange listener
         } catch (e) {
             console.error('Wallet connection failed:', e);
             rollsInfoText.textContent = 'Wallet connection failed. Please try again.';
@@ -78,11 +93,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Simulate payment and spin
-    payForRollsBtn.addEventListener('click', () => {
+    payForRollsBtn.addEventListener('click', async () => {
+        // In a real DApp, you would construct and send a transaction here
+        // Example (commented out, as this is a simulation):
+        /*
+        try {
+            const transaction = {
+                validUntil: Math.floor(Date.now() / 1000) + 360, // 6 minutes
+                messages: [
+                    {
+                        address: 'UQD8J5QN9ygpY30_afh0pqnpmTVHePlt1WrTBg-otAUjDpNG', // Your specified wallet address
+                        amount: '2000000000', // 2 TON in nanoton (2 * 10^9)
+                    },
+                ],
+            };
+            await tonConnectUI.sendTransaction(transaction);
+            // If transaction successful, proceed with simulation below
+        } catch (e) {
+            console.error('Transaction failed:', e);
+            rollsInfoText.textContent = 'Payment failed. Please try again.';
+            return; // Stop execution if transaction fails
+        }
+        */
+
         // Simulate transaction loading
         loadingAnimation.classList.remove('hide');
         payForRollsBtn.classList.add('hide');
         rollsInfoText.classList.add('hide');
+        spinningWheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        spinningWheel.style.transform = `rotate(${Math.random() * 360 + 1080}deg)`; // Spin 3+ times
 
         setTimeout(() => {
             loadingAnimation.classList.add('hide');
@@ -90,10 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
             rollsInfoText.classList.remove('hide'); // Show text again
             rollsInfoText.textContent = 'Payment successful! Enter your code to claim your prize.';
             codeEntrySection.classList.remove('hide');
+            // Ensure checkmark animation plays once and then hides
             checkmarkAnimation.addEventListener('loopComplete', () => {
                 checkmarkAnimation.classList.add('hide');
-            }, { once: true }); // Hide checkmark after one loop
-        }, 2000); // Simulate 2 seconds loading
+            }, { once: true });
+        }, 4000); // Simulate 4 seconds for spin + loading
     });
 
     // Simulate code verification
@@ -174,6 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 6. Earn Section Logic ---
     const referralLinkInput = document.getElementById('referralLink');
     const copyReferralBtn = document.querySelector('.copy-referral-btn');
+    const claimRewardBtn = document.querySelector('.stat-value .claim-btn'); // Select the claim button
+
+    // Update referral link with bot ID
+    referralLinkInput.value = `http://t.me/ShuaaCapitalBot?start=YOUR_REFERRAL_CODE`;
 
     copyReferralBtn.addEventListener('click', () => {
         referralLinkInput.select();
@@ -184,6 +228,13 @@ document.addEventListener('DOMContentLoaded', () => {
             copyReferralBtn.innerHTML = '<i class="far fa-copy"></i> Copy'; // Reset button text
         }, 2000);
     });
+
+    if (claimRewardBtn) {
+        claimRewardBtn.addEventListener('click', () => {
+            alert('Claiming rewards simulated! In a real DApp, this would initiate a withdrawal transaction.');
+            // In a real DApp, you would use tonConnectUI.sendTransaction here
+        });
+    }
 
     // Placeholder for dynamic user name in Earn section
     const earnUserName = document.querySelector('.earn-user-name');
