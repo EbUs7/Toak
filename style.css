@@ -14,20 +14,26 @@ ol {
 
 /* Send Transaction button style */
 .transact {
-
-border: none;
-padding: 10px 30px;
-font-size: lem;
-background: transparent;
-border: 2px solid var(--clr);
-font-weight: 500;
-border-radius: 40px;
-display: inline-block;
-
-
+  border: none;
+  padding: 10px 30px;
+  font-size: 1em; /* Corrected typo: 'lem' to '1em' */
+  background: transparent;
+  /* Premium Dark Mode Button: Soft glow, subtle border, elegant text */
+  border: 2px solid var(--clr, #4a90e2); /* Using a CSS variable for easier theme customization, default to a deep blue */
+  color: #e0e0e0; /* Light, readable text */
+  font-weight: 500;
+  border-radius: 40px;
+  display: inline-block;
+  transition: all 0.3s ease-in-out; /* Smooth transitions for hover effects */
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.3); /* Subtle blue glow */
 }
 
-
+.transact:hover {
+  background: var(--clr, #4a90e2); /* Fill with the accent color on hover */
+  color: #121212; /* Dark text on light background for contrast */
+  box-shadow: 0 0 20px rgba(74, 144, 226, 0.6), 0 0 30px rgba(74, 144, 226, 0.4); /* Enhanced glow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
 
 /* Убираем внешние отступы */
 body,
@@ -65,6 +71,8 @@ ol {
 
 a {
   text-decoration: none;
+  /* Ensure links inherit color unless specified, for consistent dark theme */
+  color: inherit;
 }
 
 /* Упрощаем работу с изображениями */
@@ -99,20 +107,32 @@ button {
   cursor: pointer;
 }
 
+/* Global Dark Mode Variables and Base Styles */
+:root {
+  --dark-bg: #0d0d0d; /* Very dark background, almost black */
+  --medium-dark-bg: #1a1a1a; /* Slightly lighter for cards/sections */
+  --light-dark-bg: #2c2c2c; /* Even lighter for interactive elements */
+  --text-primary: #e0e0e0; /* Off-white for main text */
+  --text-secondary: #9e9e9e; /* Muted gray for secondary text/subtitles */
+  --accent-blue: #4a90e2; /* Deep, vibrant blue for accents */
+  --accent-orange: #ff9800; /* Original orange for highlights, slightly desaturated if needed */
+  --border-color: #333333; /* Soft border color */
+  --hover-glow: rgba(74, 144, 226, 0.4); /* Blue glow for interactive elements */
+}
+
 *, html, body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
   line-height: 140%;
-  color: #e0e0e0;
+  color: var(--text-primary); /* Use primary text color */
 }
 
 body {
-  background: #121212;
-  color: #e0e0e0;
+  background: var(--dark-bg); /* Use very dark background */
+  color: var(--text-primary); /* Use primary text color */
   overflow-x: hidden;
 }
-
 
 @media (max-width: 480px) {
   html {
@@ -139,7 +159,7 @@ body {
 }
 
 .header {
-  border-bottom: 1px solid #2c2c2c;
+  border-bottom: 1px solid var(--border-color); /* Darker, subtle border */
 }
 .header__wrapper {
   display: flex;
@@ -156,6 +176,7 @@ body {
 .header__logo svg {
   width: 100%;
   height: 100%;
+  fill: var(--text-primary); /* Ensure SVG logos are visible in dark mode */
 }
 @media (max-width: 800px) {
   .header__nav {
@@ -166,10 +187,11 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    background: #FFF;
+    background: rgba(13, 13, 13, 0.95); /* Semi-transparent dark overlay for navigation */
+    backdrop-filter: blur(10px); /* Frosted glass effect for premium feel */
     z-index: 10;
     transform: translateY(-100%);
-    transition: 0.2s ease;
+    transition: 0.3s ease-in-out; /* Smoother transition */
   }
   .header__nav.active {
     transform: translateY(0);
@@ -190,10 +212,11 @@ body {
 .header__nav-list li a {
   font-size: 16px;
   font-weight: 500;
-  transition: 0.2s ease;
+  color: var(--text-primary); /* Default link color */
+  transition: color 0.2s ease;
 }
 .header__nav-list li a:hover {
-  color: #ff9800;
+  color: var(--accent-orange); /* Highlight with orange on hover */
 }
 .header__burger {
   display: none;
@@ -214,7 +237,7 @@ body {
     transform: translateY(-50%);
     width: 100%;
     height: 2px;
-    background: #fff;
+    background: var(--text-primary); /* Burger lines light in dark mode */
     border-radius: 4px;
     transition: 0.2s ease;
   }
@@ -224,7 +247,7 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background: #fff;
+    background: var(--text-primary); /* Burger lines light in dark mode */
     border-radius: 4px;
     transition: 0.2s ease;
   }
@@ -286,6 +309,7 @@ body {
   font-weight: 700;
   text-align: center;
   line-height: 120%;
+  color: var(--text-primary); /* Ensure title is visible */
 }
 @media (max-width: 480px) {
   .page__title {
@@ -293,7 +317,7 @@ body {
   }
 }
 .page__suptitle {
-  color: rgb(112, 117, 121);
+  color: var(--text-secondary); /* Muted secondary text */
   text-align: center;
   font-size: 16px;
   font-weight: 400;
@@ -306,16 +330,19 @@ body {
 }
 .page__suptitle span {
   font-weight: 700;
+  color: var(--text-primary); /* Highlighted span text */
 }
 
 .ton {
   display: flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid rgb(218, 220, 224);
+  border: 1px solid var(--border-color); /* Subtle dark border */
+  background: var(--medium-dark-bg); /* Slightly lighter background for the tag */
   padding: 12px;
   border-radius: 30px;
   margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
 }
 .ton__icon {
   flex: 0 0 18px;
@@ -325,6 +352,7 @@ body {
 .ton__title {
   font-weight: 700;
   font-size: 16px;
+  color: var(--text-primary);
 }
 @media (max-width: 480px) {
   .ton__title {
@@ -332,7 +360,7 @@ body {
   }
 }
 .ton__abb {
-  color: rgb(112, 117, 121);
+  color: var(--text-secondary); /* Muted text */
   font-weight: 300;
   font-size: 16px;
 }
@@ -357,7 +385,7 @@ body {
 .form__text {
   text-align: center;
   font-size: 16px;
-  color: rgb(112, 117, 121);
+  color: var(--text-secondary); /* Muted text */
   font-weight: 400;
 }
 @media (max-width: 480px) {
@@ -375,16 +403,21 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 0.75rem;
-  border: 1px solid rgb(218, 220, 224);
+  border: 1px solid var(--border-color); /* Subtle dark border */
+  background: var(--light-dark-bg); /* Dark background for inputs */
+  color: var(--text-primary); /* Light text for input */
   padding: 20px;
   font-size: 14px;
-  transition: 0.2s ease;
+  transition: all 0.2s ease;
 }
 .form__input input:focus {
   outline: none;
+  border-color: var(--accent-blue); /* Blue focus outline */
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3); /* Soft blue glow on focus */
 }
 .form__input input.error {
-  border-color: red;
+  border-color: #e57373; /* Softer red for error */
+  box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.3);
 }
 @media (max-width: 480px) {
   .form__input input {
@@ -397,12 +430,12 @@ body {
   top: 0;
   left: 16px;
   transform: translateY(-50%);
-  background: #FFF;
-  color: rgb(112, 117, 121);
+  background: var(--dark-bg); /* Match body background for label cutout */
+  color: var(--text-secondary); /* Muted label text */
   font-size: 12px;
   font-weight: 400;
   padding: 2px 4px;
-  transition: 0.2s ease;
+  transition: all 0.2s ease;
 }
 @media (max-width: 480px) {
   .form__input label {
@@ -410,26 +443,31 @@ body {
   }
 }
 .form__input:hover label {
-  color: rgb(51, 144, 236);
+  color: var(--accent-blue); /* Blue on hover */
 }
 .form__input:hover input {
-  border-color: rgb(51, 144, 236);
+  border-color: var(--accent-blue); /* Blue on hover */
 }
 .form__btn {
-  color: #ff9800;
+  color: var(--accent-orange); /* Orange text */
   text-transform: uppercase;
   font-weight: 500;
   font-size: 20px;
   text-align: center;
   background: transparent;
-  transition: 0.2s ease;
+  transition: all 0.3s ease;
   width: 100%;
   padding: 20px;
   border-radius: 0.75rem;
   margin-top: 12px;
+  border: 1px solid var(--accent-orange); /* Orange border for consistency */
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.2); /* Subtle orange glow */
 }
 .form__btn:hover {
-  background: #F1F7FC;
+  background: var(--accent-orange); /* Fill with orange on hover */
+  color: var(--dark-bg); /* Dark text on orange background */
+  box-shadow: 0 0 20px rgba(255, 152, 0, 0.4); /* Enhanced orange glow */
+  transform: translateY(-2px);
 }
 @media (max-width: 480px) {
   .form__btn {
@@ -461,7 +499,7 @@ body {
 }
 .loading__text {
   font-size: 14px;
-  color: rgb(112, 117, 121);
+  color: var(--text-secondary); /* Muted text */
   text-align: center;
 }
 
@@ -477,14 +515,17 @@ body {
   margin-top: 40px;
   animation: fade 0.2s ease;
   border-radius: 20px;
-  border: 1px solid rgb(218, 220, 224);
+  border: 1px solid var(--border-color); /* Subtle dark border */
+  background: var(--medium-dark-bg); /* Dark background for result box */
   padding: 20px 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Deeper shadow for elevation */
 }
 .result__title {
   font-size: 20px;
   font-weight: 700;
   text-align: center;
   line-height: 120%;
+  color: var(--text-primary);
 }
 @media (max-width: 480px) {
   .result__title {
@@ -492,7 +533,7 @@ body {
   }
 }
 .result__count {
-  color: rgb(51, 144, 236);
+  color: var(--accent-blue); /* Blue accent for count */
   font-size: 20px;
   font-weight: 700;
   text-align: center;
@@ -512,21 +553,29 @@ body {
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
+  filter: grayscale(100%) brightness(200%); /* Adjust image for dark mode if it's a light icon */
 }
 .result__count span {
   font-size: 20px;
-  color: #ff9800;
+  color: var(--accent-orange); /* Orange for the numeric value */
 }
 .result.active {
   display: flex !important;
 }
 .result__btn {
-  background: #ff9800;
-  color: #9e9e9e;
+  background: var(--accent-orange); /* Orange button */
+  color: var(--dark-bg); /* Dark text on orange */
   margin-top: 20px;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3); /* Orange glow */
 }
 .result__btn:hover {
-  background: #f57c00;
+  background: #e68a00; /* Slightly darker orange on hover */
+  box-shadow: 0 8px 20px rgba(255, 152, 0, 0.5);
+  transform: translateY(-2px);
 }/*# sourceMappingURL=style.css.map */
 
 .part{
@@ -535,24 +584,27 @@ body {
 .part h2{
     font-size: 34px;
     font-weight: 700;
+    color: var(--text-primary); /* Ensure heading is visible */
 }
 .part__ideas{
     display: flex;
     align-items: center;
     gap: 100px;
     padding: 40px 60px;
-    background: #4f9afe;
+    background: var(--medium-dark-bg); /* Darker background for this section */
     border-radius: 24px;
     margin-top: 40px;
+    border: 1px solid var(--border-color); /* Subtle border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Deeper shadow */
 }
 .part__ideas h3{
     font-size: 30px;
-    color: #4f9afe;
+    color: var(--accent-blue); /* Accent blue for this heading */
     font-weight: 700;
 }
 .part__ideas p{
     font-size: 18px;
-    color: #f57c00;
+    color: var(--text-secondary); /* Muted text */
     padding-top: 5px;
     max-width: 500px;
 }
@@ -565,22 +617,33 @@ body {
 .part__btn a:first-child{
     border-radius: 24px;
     padding: 15px 20px;
-    color:  #f57c00;
-    background: #fff;
+    color:  var(--dark-bg); /* Dark text on light background */
+    background: var(--accent-orange); /* Orange background */
     font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+}
+.part__btn a:first-child:hover{
+    background: #e68a00; /* Darker orange on hover */
+    box-shadow: 0 6px 15px rgba(255, 152, 0, 0.5);
+    transform: translateY(-2px);
 }
 .part__btn a:first-child i{
-    color:  #4f9afe;
+    color:  var(--dark-bg); /* Icon color matches button text */
     padding-left: 10px;
 }
 .part__btn a:last-child{
-    color: #f57c00;
+    color: var(--accent-blue); /* Blue for the secondary link */
     font-weight: 600;
+    transition: color 0.2s ease;
+}
+.part__btn a:last-child:hover{
+    color: #6da2f8; /* Lighter blue on hover */
 }
 .part__btn a:last-child i{
     padding-left: 10px;
     font-size: 12px;
-    color: #fff;
+    color: var(--text-primary); /* Light icon */
 }
 .part__ideas-right{
     display: flex;
@@ -594,12 +657,14 @@ body {
     gap: 5px;
 }
 .part__num-item{
-    background: #fff;
+    background: var(--light-dark-bg); /* Dark background for number items */
     padding: 10px 15px;
-    color: #f57c00;
+    color: var(--accent-orange); /* Orange numbers */
     border-radius: 7px;
     font-weight: 600;
     font-size: 24px;
+    border: 1px solid var(--border-color); /* Subtle border */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
 }
 .part__num-item:first-child{
     margin-right: 10px;
@@ -609,7 +674,7 @@ body {
 }
 .part__num-text{
     font-size: 18px;
-    color: #fff;
+    color: var(--text-primary); /* Light text */
     font-weight: 400;
 }
 
@@ -622,43 +687,56 @@ body {
     gap: 20px;
 }
 .blocks__item{
-    background: #f7f9fb;
+    background: var(--medium-dark-bg); /* Dark background for block items */
     padding: 40px;
     border-radius: 24px;
     position: relative;
     padding-bottom: 300px;
+    border: 1px solid var(--border-color); /* Subtle border */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.blocks__item:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
 }
 .blocks__item h3{
     font-size: 30px;
-    color: #04060b;
+    color: var(--accent-blue); /* Accent blue for headings */
     font-weight: 700;
 }
 .blocks__item p{
     font-size: 18px;
-    color: #04060b;
+    color: var(--text-secondary); /* Muted text */
     padding-top: 5px;
     max-width: 500px;
     padding-bottom: 15px;
 }
 .blocks__item a{
-    color: #f57c00;
+    color: var(--accent-orange); /* Orange link */
     font-weight: 600;
+    transition: color 0.2s ease;
+}
+.blocks__item a:hover{
+    color: #e68a00; /* Darker orange on hover */
 }
 .blocks__item i{
     padding-left: 10px;
     font-size: 13px;
-    color: #f57c00;
+    color: var(--accent-orange); /* Orange icon */
 }
 .blocks__item img{
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
+    opacity: 0.8; /* Slightly desaturate images for dark mode integration */
+    filter: brightness(0.9) contrast(1.1); /* Subtle adjustment for dark themes */
 }
 
 footer{
     margin-top: 80px;
-    border-top: 1px solid rgb(218, 220, 224);
+    border-top: 1px solid var(--border-color); /* Subtle dark border */
     padding: 25px 0 20px 0;
 }
 .footer__wrapper{
@@ -675,14 +753,19 @@ footer{
 .footer__logo svg {
   width: 100%;
   height: 100%;
+  fill: var(--text-primary); /* Ensure logo is visible */
 }
 .footer__soc{
     display: flex;
     gap: 22px;
 }
 .footer__soc i{
-    color: #98b2bf;
+    color: var(--text-secondary); /* Muted social icons */
     font-size: 20px;
+    transition: color 0.2s ease;
+}
+.footer__soc i:hover{
+    color: var(--accent-blue); /* Blue on hover for social icons */
 }
 
 @media (max-width:700px){
@@ -726,23 +809,25 @@ footer{
     }
     .blocks__item p{
         font-size: 16px;
-        color: #04060b;
+        color: var(--text-secondary); /* Muted text */
         padding-top: 5px;
         max-width: 100%;
         padding-bottom: 15px;
     }
     .blocks__item a{
-        color: #4f9afe;
+        color: var(--accent-orange); /* Orange link */
         font-weight: 600;
     }
     .blocks__item i{
         padding-left: 10px;
         font-size: 13px;
-        color: #f57c00;
+        color: var(--accent-orange); /* Orange icon */
     }
     .blocks__item img{
         position: absolute;
         bottom: 0;
         left: 0;
+        opacity: 0.8; /* Keep consistent image adjustments */
+        filter: brightness(0.9) contrast(1.1);
     }
 }
