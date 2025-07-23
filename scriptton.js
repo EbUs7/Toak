@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionContents = document.querySelectorAll('.section-content');
 
     // --- 1. Start Screen Logic ---
-    // Ensure start screen is visible initially for animation
-    startScreen.classList.add('active');
+    startScreen.classList.add('active'); // Ensure active class is set for animation
     setTimeout(() => {
         startScreen.classList.add('fade-out');
         startScreen.addEventListener('animationend', () => {
@@ -28,6 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('content-rolls').classList.add('active-section');
     bottomNavTabs.forEach(tab => {
         tab.addEventListener('click', () => {
+            // Haptic Feedback for tab clicks
+            if (navigator.vibrate) {
+                navigator.vibrate(50); // Short subtle vibration
+            }
+
             const targetSectionId = tab.dataset.section;
 
             // Remove active class from all tabs and sections
@@ -49,10 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 4. TON Connect Wallet (Rolls Section) ---
-    const connectWalletBtnRolls = document.getElementById('connectWalletBtnRolls');
-    const payForRollsBtn = document.getElementById('payForRollsBtn');
+    // --- 4. TON Connect Wallet & Rolls Logic ---
     const rollsInfoText = document.querySelector('.rolls-info-text');
+    const tonConnectDiv = document.getElementById('ton-connect'); // The div where TonConnectUI renders its button
     const codeEntrySection = document.querySelector('.code-entry-section');
     const confirmationCodeInput = document.getElementById('confirmationCodeInput');
     const verifyCodeBtn = document.getElementById('verifyCodeBtn');
@@ -61,87 +64,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingAnimation = document.querySelector('.loading-animation');
     const checkmarkAnimation = document.querySelector('.checkmark-animation');
     const spinningWheel = document.querySelector('.spinning-wheel');
-    const tonConnectUI = new TonConnectUI({
-        manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json', // Corrected manifest URL
+
+    // Initialize TON Connect UI with the specified buttonRootId
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect' // TonConnectUI will render its button here
     });
 
-    // Handle TonConnectUI connection status
+    // Listen for TonConnectUI status changes
     tonConnectUI.onStatusChange(wallet => {
         if (wallet) {
-            rollsInfoText.textContent = 'Wallet connected! Pay 2 TON to spin the wheel.';
-            connectWalletBtnRolls.classList.add('hide');
-            payForRollsBtn.classList.remove('hide');
-            // You can get wallet address here: wallet.account.address
-            // console.log('Connected wallet address:', wallet.account.address);
+            // Wallet is connected
+            rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Press the button above to pay 2 TON and roll!`;
+            // Simulate the transaction success flow after a short delay, as TonConnectUI's button will handle the actual transaction.
+            // In a real DApp, this would be triggered by a successful transaction callback from TonConnectUI.
+            setTimeout(simulateTonConnectTransactionSuccess, 1000); // Simulate after 1 second of connection
         } else {
+            // Wallet is disconnected
             rollsInfoText.textContent = 'Connect your TON wallet to participate.';
-            connectWalletBtnRolls.classList.remove('hide');
-            payForRollsBtn.classList.add('hide');
-            codeEntrySection.classList.add('hide'); // Hide code entry if disconnected
-            referralAfterCodeMessage.classList.add('hide'); // Hide referral message if disconnected
+            // Hide related sections if wallet disconnects
+            codeEntrySection.classList.add('hide');
+            referralAfterCodeMessage.classList.add('hide');
         }
     });
 
-    connectWalletBtnRolls.addEventListener('click', async () => {
-        try {
-            await tonConnectUI.openModal();
-            // Status change is handled by onStatusChange listener
-        } catch (e) {
-            console.error('Wallet connection failed:', e);
-            rollsInfoText.textContent = 'Wallet connection failed. Please try again.';
-        }
-    });
-
-    // Simulate payment and spin
-    payForRollsBtn.addEventListener('click', async () => {
-        // In a real DApp, you would construct and send a transaction here
-        // Example (commented out, as this is a simulation):
-        /*
-        try {
-            const transaction = {
-                validUntil: Math.floor(Date.now() / 1000) + 360, // 6 minutes
-                messages: [
-                    {
-                        address: 'UQD8J5QN9ygpY30_afh0pqnpmTVHePlt1WrTBg-otAUjDpNG', // Your specified wallet address
-                        amount: '2000000000', // 2 TON in nanoton (2 * 10^9)
-                    },
-                ],
-            };
-            await tonConnectUI.sendTransaction(transaction);
-            // If transaction successful, proceed with simulation below
-        } catch (e) {
-            console.error('Transaction failed:', e);
-            rollsInfoText.textContent = 'Payment failed. Please try again.';
-            return; // Stop execution if transaction fails
-        }
-        */
-
-        // Simulate transaction loading
+    const simulateTonConnectTransactionSuccess = () => {
         loadingAnimation.classList.remove('hide');
-        payForRollsBtn.classList.add('hide');
         rollsInfoText.classList.add('hide');
+        
+        // Spin the wheel
         spinningWheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
         spinningWheel.style.transform = `rotate(${Math.random() * 360 + 1080}deg)`; // Spin 3+ times
 
         setTimeout(() => {
             loadingAnimation.classList.add('hide');
             checkmarkAnimation.classList.remove('hide');
-            rollsInfoText.classList.remove('hide'); // Show text again
+            rollsInfoText.classList.remove('hide');
             rollsInfoText.textContent = 'Payment successful! Enter your code to claim your prize.';
             codeEntrySection.classList.remove('hide');
-            // Ensure checkmark animation plays once and then hides
             checkmarkAnimation.addEventListener('loopComplete', () => {
                 checkmarkAnimation.classList.add('hide');
             }, { once: true });
+            
+            // Trigger vibration
+            if (navigator.vibrate) {
+                navigator.vibrate(100); // Medium vibration for successful payment/spin
+            }
         }, 4000); // Simulate 4 seconds for spin + loading
-    });
-
+    };
+    
     // Simulate code verification
     verifyCodeBtn.addEventListener('click', () => {
         const enteredCode = confirmationCodeInput.value.trim();
         codeErrorMessage.classList.add('hide'); // Hide previous errors
+        
+        // Haptic Feedback for button click
+        if (navigator.vibrate) {
+            navigator.vibrate(50); // Short subtle vibration
+        }
 
-        if (enteredCode === '909986') { // Example correct code
+        if (enteredCode === '909986') { // Correct code
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.remove('hide');
             rollsInfoText.classList.add('hide'); // Hide previous info text
@@ -149,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             codeErrorMessage.classList.remove('hide');
             confirmationCodeInput.classList.add('error'); // Add error styling
+            if (navigator.vibrate) { // Vibrate for error
+                navigator.vibrate(150);
+            }
             setTimeout(() => confirmationCodeInput.classList.remove('error'), 1500); // Remove error after a bit
         }
     });
@@ -162,8 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const learnMoreLink = document.querySelector('.learn-more-link');
     const learnMoreContent = document.querySelector('.learn-more-content');
 
-    const STAKING_RATE = 0.10; // 10% profit
-    const FEE_RATE = 0.01; // 1% fee on profit
+    const STAKING_RATE_DAILY = 0.10 / 30; // 10% profit over 30 days, daily rate
+    const FEE_RATE = 0.01; // 1% fee on total profit
 
     const updateStakingSummary = () => {
         const amount = parseFloat(stakingAmountInput.value);
@@ -178,11 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
         stakeTonBtn.disabled = false;
         stakeTonBtn.style.opacity = '1';
 
-        const estimatedProfit = amount * STAKING_RATE;
-        const stakingFee = estimatedProfit * FEE_RATE;
-        const totalReturn = amount + estimatedProfit - stakingFee;
+        const estimatedTotalProfit = amount * STAKING_RATE_DAILY * 30; // Total profit for 30 days
+        const stakingFee = estimatedTotalProfit * FEE_RATE;
+        const totalReturn = amount + estimatedTotalProfit - stakingFee;
 
-        estimatedProfitSpan.textContent = `${estimatedProfit.toFixed(2)} TON`;
+        estimatedProfitSpan.textContent = `${estimatedTotalProfit.toFixed(2)} TON`;
         stakingFeeSpan.textContent = `${stakingFee.toFixed(2)} TON`;
         totalReturnSpan.textContent = `${totalReturn.toFixed(2)} TON`;
     };
@@ -191,6 +176,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStakingSummary(); // Initial calculation
 
     stakeTonBtn.addEventListener('click', () => {
+        // Haptic Feedback for button click
+        if (navigator.vibrate) {
+            navigator.vibrate(50); // Short subtle vibration
+        }
+
         const amount = parseFloat(stakingAmountInput.value);
         if (isNaN(amount) || amount <= 0) {
             alert('Please enter a valid amount to stake.');
@@ -204,20 +194,17 @@ document.addEventListener('DOMContentLoaded', () => {
     learnMoreLink.addEventListener('click', (e) => {
         e.preventDefault();
         learnMoreContent.classList.toggle('hide');
-        if (learnMoreContent.classList.contains('hide')) {
-            learnMoreLink.textContent = 'Learn More About Staking';
-        } else {
-            learnMoreLink.textContent = 'Show Less';
+        learnMoreLink.textContent = learnMoreContent.classList.contains('hide') ? 'Learn More About Staking' : 'Show Less';
+        // Haptic Feedback for toggle
+        if (navigator.vibrate) {
+            navigator.vibrate(30);
         }
     });
 
     // --- 6. Earn Section Logic ---
     const referralLinkInput = document.getElementById('referralLink');
     const copyReferralBtn = document.querySelector('.copy-referral-btn');
-    const claimRewardBtn = document.querySelector('.stat-value .claim-btn'); // Select the claim button
-
-    // Update referral link with bot ID
-    referralLinkInput.value = `http://t.me/ShuaaCapitalBot?start=YOUR_REFERRAL_CODE`;
+    const claimRewardBtn = document.querySelector('.stat-value .claim-btn');
 
     copyReferralBtn.addEventListener('click', () => {
         referralLinkInput.select();
@@ -227,58 +214,56 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             copyReferralBtn.innerHTML = '<i class="far fa-copy"></i> Copy'; // Reset button text
         }, 2000);
+        // Haptic Feedback
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
     });
 
     if (claimRewardBtn) {
         claimRewardBtn.addEventListener('click', () => {
             alert('Claiming rewards simulated! In a real DApp, this would initiate a withdrawal transaction.');
-            // In a real DApp, you would use tonConnectUI.sendTransaction here
+            // Haptic Feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(70);
+            }
         });
     }
 
     // Placeholder for dynamic user name in Earn section
     const earnUserName = document.querySelector('.earn-user-name');
-    // In a real DApp, you'd fetch this from the connected wallet or Telegram API
-    // For now, it's a static placeholder.
-    // Example: earnUserName.textContent = `@${userTelegramUsername}`;
+    // You would typically get the Telegram username from Telegram Mini App API or a backend.
+    // For now, it remains a static placeholder.
+    // Example: if (window.Telegram.WebApp) earnUserName.textContent = `@${window.Telegram.WebApp.initDataUnsafe.user.username || 'TelegramUser'}`;
+
 
     // --- 7. Team Section Photo Interaction ---
     const teamPhotos = document.querySelectorAll('.team-photo');
 
     teamPhotos.forEach(photo => {
         photo.addEventListener('click', () => {
-            // Remove elevated class from all photos first
-            teamPhotos.forEach(p => {
-                p.classList.remove('elevated');
-                p.classList.add('blurred'); // Ensure others are blurred
-            });
-            // Add elevated class to the clicked photo
-            photo.classList.remove('blurred');
-            photo.classList.add('elevated');
+            // Haptic Feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(30);
+            }
+
+            // Toggle elevated class for the clicked photo
+            if (photo.classList.contains('elevated')) {
+                photo.classList.remove('elevated');
+                photo.classList.add('blurred');
+            } else {
+                // Remove elevated class from all other photos first
+                teamPhotos.forEach(p => {
+                    p.classList.remove('elevated');
+                    p.classList.add('blurred');
+                });
+                photo.classList.remove('blurred');
+                photo.classList.add('elevated');
+            }
         });
     });
 
-    // --- 8. Global Countdown Timer ---
-    const countdownElement = document.getElementById('countdown');
-    const endDate = new Date('July 30, 2025 12:00:00 UTC').getTime(); // Set your target date and time
-
-    const updateCountdown = () => {
-        const now = new Date().getTime();
-        const distance = endDate - now;
-
-        if (distance < 0) {
-            countdownElement.innerHTML = "EXPIRED";
-            return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    };
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Initial call to display immediately
+    // --- 8. Global Countdown Timer (Removed logic, now static) ---
+    // The countdown element is now static in index.html, so no JavaScript is needed for it.
+    // Removed: updateCountdown function and setInterval.
 });
