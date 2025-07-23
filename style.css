@@ -43,6 +43,8 @@ body {
   color: #E0E0E0; /* Light gray text for dark theme */
   background: #1A1A2E; /* Deep dark background */
   overflow-x: hidden;
+  display: flex; /* Use flexbox for overall layout */
+  flex-direction: column;
 }
 
 a {
@@ -85,9 +87,13 @@ button {
   display: none !important;
 }
 
+/* Ensure sections are properly hidden/shown */
 .active-section {
-    display: block !important;
-    animation: fadeIn 0.5s ease-out; /* Fade in animation for active sections */
+    display: flex !important; /* Use flex for internal layout of sections */
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.5s ease-out forwards; /* Fade in animation for active sections */
+    width: 100%; /* Ensure it takes full width of page wrapper */
 }
 
 .hidden-section {
@@ -165,6 +171,8 @@ button {
     height: 60px; /* Adjust height based on font size */
     margin-bottom: 30px;
     overflow: hidden; /* Hide parts of shadows */
+    width: 100%; /* Ensure it spans enough width for animation */
+    white-space: nowrap; /* Keep text in one line */
 }
 
 .start-screen__rolls-shadows span {
@@ -172,12 +180,11 @@ button {
     font-size: 3em;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.05); /* Very faint white for shadow effect */
-    white-space: nowrap;
     animation: rollsShadows 4s linear infinite;
 }
 
 .start-screen__rolls-shadows span:nth-child(1) { animation-delay: 0s; left: 0; }
-.start-screen__rolls-shadows span:nth-child(2) { animation-delay: 1.33s; left: 100%; } /* Stagger the animation */
+.start-screen__rolls-shadows span:nth-child(2) { animation-delay: 1.33s; left: 100%; }
 .start-screen__rolls-shadows span:nth-child(3) { animation-delay: 2.66s; left: 200%; }
 
 
@@ -207,10 +214,22 @@ button {
     to { opacity: 1; }
 }
 
+/* Main Page Layout */
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make sure page takes full height */
+    padding-bottom: 80px; /* Space for bottom nav */
+}
+
 /* Header */
 .header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Lighter border for dark theme */
   background: #1A1A2E; /* Ensure header background matches */
+  position: sticky; /* Keep header at top */
+  top: 0;
+  width: 100%;
+  z-index: 100;
 }
 .header__wrapper {
   display: flex;
@@ -321,27 +340,30 @@ button {
   }
 }
 
-/* Page Layout */
+/* Page Wrapper - Holds dynamic content sections */
 .page__wrapper {
+  flex-grow: 1; /* Allow wrapper to grow and push footer down */
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 25.5rem;
+  max-width: 25.5rem; /* Max width of content */
   padding: 0 20px;
   margin: 70px auto 0 auto;
   position: relative; /* For proper positioning of content sections */
-  min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+  width: 100%; /* Ensure it spans available width for content */
 }
 @media (max-width: 480px) {
   .page__wrapper {
-    margin: 30px auto;
+    margin: 30px auto 0 auto;
   }
 }
+
+/* Common Header/Suptitle for main page sections like Rolls */
 .page__logo {
-  width: 100px; /* Slightly smaller for better dark theme balance */
+  width: 100px;
   height: 100px;
   margin-bottom: 25px;
-  filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.4)); /* Glow for logo */
+  filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.4));
 }
 @media (max-width: 480px) {
   .page__logo {
@@ -356,12 +378,12 @@ button {
   object-fit: contain;
 }
 .page__title {
-  font-size: 2.2em; /* Adjusted for dark theme impact */
+  font-size: 2.2em;
   font-weight: 700;
   text-align: center;
   line-height: 120%;
-  color: #E0E0E0; /* Light text on dark background */
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* Subtle text shadow */
+  color: #E0E0E0;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 @media (max-width: 480px) {
   .page__title {
@@ -369,7 +391,7 @@ button {
   }
 }
 .page__suptitle {
-  color: #B0B0B0; /* Slightly darker gray for suptitle */
+  color: #B0B0B0;
   text-align: center;
   font-size: 1em;
   font-weight: 400;
@@ -382,7 +404,7 @@ button {
 }
 .page__suptitle span {
   font-weight: 700;
-  color: #00BFFF; /* Accent color for key words */
+  color: #00BFFF;
 }
 
 /* TON Info Box */
@@ -390,12 +412,12 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(0, 191, 255, 0.3); /* Accent border */
-  background: rgba(0, 191, 255, 0.05); /* Very subtle accent background */
+  border: 1px solid rgba(0, 191, 255, 0.3);
+  background: rgba(0, 191, 255, 0.05);
   padding: 10px 18px;
   border-radius: 30px;
   margin-top: 25px;
-  box-shadow: 0 0 15px rgba(0, 191, 255, 0.15); /* Subtle glow */
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.15);
 }
 .ton__icon {
   flex: 0 0 20px;
@@ -403,7 +425,7 @@ button {
   width: 20px;
 }
 .ton__icon img {
-  filter: drop-shadow(0 0 5px rgba(0, 191, 255, 0.4)); /* Glow for coin icon */
+  filter: drop-shadow(0 0 5px rgba(0, 191, 255, 0.4));
 }
 .ton__title {
   font-weight: 700;
@@ -416,7 +438,7 @@ button {
   }
 }
 .ton__abb {
-  color: #808080; /* Darker gray for abbreviation */
+  color: #808080;
   font-weight: 300;
   font-size: 1em;
 }
@@ -426,47 +448,45 @@ button {
   }
 }
 
-/* Common Section Styles */
+/* Common Section Content Block */
 .section-content {
-    width: 100%;
+    /* Previously defined for active section display */
+    padding: 30px; /* Increased padding */
     margin-top: 40px;
-    padding: 20px;
-    background: #25253A; /* Slightly lighter dark background for content blocks */
+    background: #25253A;
     border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 191, 255, 0.1); /* Deeper shadow with subtle glow */
-    border: 1px solid rgba(0, 191, 255, 0.1); /* Subtle accent border */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 191, 255, 0.1);
+    border: 1px solid rgba(0, 191, 255, 0.1);
+    max-width: 100%; /* Ensure it fits within page__wrapper */
+    text-align: center; /* Default text alignment for content */
 }
 
 /* Input Group Styles */
 .input-group {
     position: relative;
-    width: 90%; /* Adjusted width for better padding */
-    height: 55px; /* Consistent height */
-    margin-top: 30px;
-    margin-bottom: 10px; /* Space before buttons */
+    width: 90%;
+    height: 55px;
+    margin: 30px auto 10px auto; /* Centered with auto margins */
 }
 .input-group input {
     width: 100%;
     height: 100%;
     border-radius: 0.75rem;
-    border: 1px solid rgba(0, 191, 255, 0.3); /* Accent border */
-    background: rgba(0, 0, 0, 0.2); /* Very dark, slightly transparent background */
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2); /* Dark, slightly transparent background */
     padding: 15px 20px;
     font-size: 1em;
-    color: #E0E0E0; /* Light text */
+    color: #E0E0E0;
     transition: all 0.2s ease;
-    box-shadow: inset 0 0 5px rgba(0, 191, 255, 0.1); /* Inner glow */
+    box-shadow: inset 0 0 5px rgba(0, 191, 255, 0.1);
 }
 .input-group input:focus {
     outline: none;
-    border-color: #00BFFF; /* Accent color on focus */
-    box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.5), 0 0 15px rgba(0, 191, 255, 0.3); /* Stronger glow */
+    border-color: #00BFFF;
+    box-shadow: inset 0 0 8px rgba(0, 191, 255, 0.5), 0 0 15px rgba(0, 191, 255, 0.3);
 }
 .input-group input.error {
-    border-color: #FF6347; /* Error color */
+    border-color: #FF6347;
     box-shadow: inset 0 0 8px rgba(255, 99, 71, 0.5), 0 0 15px rgba(255, 99, 71, 0.3);
 }
 .input-group label {
@@ -476,7 +496,7 @@ button {
     left: 16px;
     transform: translateY(-50%);
     background: #25253A; /* Match section background */
-    color: #808080; /* Dimmer label */
+    color: #808080;
     font-size: 0.8em;
     font-weight: 400;
     padding: 2px 8px;
@@ -485,9 +505,9 @@ button {
 /* Label states for focus/filled */
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label {
-    color: #00BFFF; /* Accent color */
+    color: #00BFFF;
     font-size: 0.75em;
-    transform: translateY(-70%); /* Move label further up */
+    transform: translateY(-70%);
 }
 @media (max-width: 480px) {
   .input-group label {
@@ -497,7 +517,7 @@ button {
 
 /* Primary Button */
 .primary-button {
-    background: linear-gradient(90deg, #00BFFF 0%, #007bff 100%); /* Blue gradient */
+    background: linear-gradient(90deg, #00BFFF 0%, #007bff 100%);
     color: #FFFFFF;
     font-weight: 600;
     font-size: 1.1em;
@@ -505,17 +525,18 @@ button {
     padding: 16px 30px;
     border-radius: 30px;
     margin-top: 20px;
-    width: 90%; /* Consistent width with input */
-    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.4); /* Stronger glow effect */
+    width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.4);
     transition: all 0.3s ease-in-out;
     position: relative;
     overflow: hidden;
     letter-spacing: 0.5px;
+    cursor: pointer; /* Ensure cursor is pointer */
 }
 .primary-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(0, 191, 255, 0.6); /* More intense glow */
-    background: linear-gradient(90deg, #00CFFF 0%, #0088ff 100%); /* Lighter gradient on hover */
+    box-shadow: 0 12px 25px rgba(0, 191, 255, 0.6);
+    background: linear-gradient(90deg, #00CFFF 0%, #0088ff 100%);
 }
 .primary-button:active {
     transform: translateY(0);
@@ -544,7 +565,7 @@ button {
 /* Secondary Button */
 .secondary-button {
     background: transparent;
-    border: 2px solid #00BFFF; /* Accent border */
+    border: 2px solid #00BFFF;
     color: #00BFFF;
     font-weight: 500;
     font-size: 1em;
@@ -554,11 +575,12 @@ button {
     margin-top: 15px;
     width: 90%;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.2); /* Subtle glow */
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+    cursor: pointer; /* Ensure cursor is pointer */
 }
 .secondary-button:hover {
-    background: rgba(0, 191, 255, 0.1); /* Light fill on hover */
-    box-shadow: 0 0 25px rgba(0, 191, 255, 0.4); /* More intense glow */
+    background: rgba(0, 191, 255, 0.1);
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.4);
     transform: translateY(-2px);
 }
 .secondary-button:active {
@@ -575,35 +597,35 @@ button {
 }
 .spinner-container {
     position: relative;
-    width: 280px; /* Adjust as needed for 1x1 image */
-    height: 280px; /* Keep 1x1 aspect ratio */
+    width: 280px;
+    height: 280px;
     margin: 30px auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%; /* Make it circular */
-    overflow: hidden; /* Ensure image doesn't overflow */
-    box-shadow: 0 0 30px rgba(0, 191, 255, 0.5), inset 0 0 20px rgba(0, 191, 255, 0.3); /* Stronger glow and inner glow */
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 191, 255, 0.5), inset 0 0 20px rgba(0, 191, 255, 0.3);
 }
 .spinning-wheel {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Cover the container */
-    transform: rotate(0deg); /* Initial state */
-    transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smooth spin effect */
+    object-fit: cover;
+    transform: rotate(0deg);
+    transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 .spinner-needle {
     position: absolute;
-    top: -5%; /* Position slightly above the wheel */
+    top: -5%;
     left: 50%;
     width: 0;
     height: 0;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-bottom: 35px solid #FFD700; /* Gold color for needle */
+    border-bottom: 35px solid #FFD700;
     transform: translateX(-50%);
     z-index: 100;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)); /* Gold glow */
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
 }
 .spinner-center-text {
     position: absolute;
@@ -612,9 +634,9 @@ button {
     color: #E0E0E0;
     z-index: 50;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    width: 80px; /* Size of the central circle */
+    width: 80px;
     height: 80px;
     display: flex;
     justify-content: center;
@@ -635,7 +657,6 @@ button {
     width: 100%;
     margin-top: 20px;
 }
-/* Specific style for code entry section, if needed */
 .code-entry-section {
     width: 100%;
     display: flex;
@@ -651,7 +672,7 @@ button {
 }
 .referral-after-code-message {
     text-align: center;
-    color: #4CAF50; /* Green for success/instruction */
+    color: #4CAF50;
     font-size: 1.1em;
     font-weight: 500;
     margin-top: 20px;
@@ -660,6 +681,19 @@ button {
     border-radius: 10px;
     border: 1px solid rgba(76, 175, 80, 0.3);
 }
+/* Lottie animations */
+.loading-animation, .checkmark-animation {
+    width: 100px;
+    height: 100px;
+    margin: 30px auto;
+}
+.loading-animation .loading-text {
+    text-align: center;
+    color: #B0B0B0;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
 
 /* Staking Section Specifics */
 .staking-header {
@@ -674,7 +708,7 @@ button {
     width: 50px;
     height: 50px;
     object-fit: contain;
-    filter: drop-shadow(0 0 15px rgba(0, 191, 255, 0.6)); /* Stronger glow for TON icon */
+    filter: drop-shadow(0 0 15px rgba(0, 191, 255, 0.6));
 }
 .staking-title {
     font-size: 1.8em;
@@ -684,7 +718,7 @@ button {
     text-align: center;
 }
 .staking-banner-text {
-    background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%); /* Green gradient for banner */
+    background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
     color: #FFFFFF;
     padding: 12px 20px;
     border-radius: 10px;
@@ -714,6 +748,8 @@ button {
     margin-bottom: 10px;
     font-size: 1em;
     color: #B0B0B0;
+    padding-left: 5%; /* Align with input group */
+    padding-right: 5%;
 }
 .staking-summary p:last-of-type {
     font-size: 1.2em;
@@ -734,20 +770,21 @@ button {
     padding: 15px;
     margin-top: 15px;
     border: 1px solid rgba(0, 191, 255, 0.1);
+    text-align: left; /* Align text within learn more */
 }
 .learn-more-content p {
     margin-bottom: 8px;
     color: #B0B0B0;
     font-size: 0.9em;
-    text-align: left;
-    display: block; /* Override flex */
+    display: block;
     justify-content: unset;
+    padding: 0; /* Remove potential padding from general p */
 }
 .learn-more-content p:last-child {
     margin-bottom: 0;
 }
 .learn-more-content p strong {
-    color: #E0E0E0; /* Make bold text stand out */
+    color: #E0E0E0;
 }
 
 
@@ -763,7 +800,7 @@ button {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #00BFFF; /* Accent border for profile pic */
+    border: 3px solid #00BFFF;
     box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
 }
 .earn-user-name {
@@ -774,7 +811,7 @@ button {
 }
 .earn-invite-card {
     width: 90%;
-    background: #1F1F35; /* Slightly different dark shade */
+    background: #1F1F35;
     padding: 25px;
     border-radius: 15px;
     text-align: center;
@@ -793,28 +830,28 @@ button {
     line-height: 1.6;
 }
 .earn-invite-card p strong {
-    color: #4CAF50; /* Green for earnings percentage */
+    color: #4CAF50;
 }
 .referral-link-group {
     display: flex;
     align-items: center;
     width: 100%;
     margin-top: 25px;
-    margin-bottom: 0; /* Adjust margin for direct use */
+    margin-bottom: 0;
 }
 .referral-link-group input {
     flex-grow: 1;
     margin-right: 10px;
-    background: rgba(0, 0, 0, 0.3); /* Darker input */
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(0, 191, 255, 0.2);
-    box-shadow: none; /* Remove default input glow for this field */
-    padding-right: 50px; /* Space for copy button */
+    box-shadow: none;
+    padding-right: 50px;
 }
 .referral-link-group label {
-    display: none; /* Hide label for this inline input */
+    display: none;
 }
 .copy-referral-btn {
-    background: #007bff; /* Darker blue for copy button */
+    background: #007bff;
     color: #FFFFFF;
     padding: 10px 15px;
     border-radius: 8px;
@@ -839,13 +876,15 @@ button {
     justify-content: space-around;
     width: 90%;
     margin-top: 30px;
-    gap: 15px; /* Space between stat boxes */
+    gap: 15px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 .stat-box {
-    background: #1F1F35; /* Same as invite card */
+    background: #1F1F35;
     padding: 20px 15px;
     border-radius: 12px;
     flex: 1;
+    min-width: 140px; /* Ensure boxes don't get too small */
     text-align: center;
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -858,26 +897,29 @@ button {
 .stat-value {
     font-size: 1.4em;
     font-weight: 700;
-    color: #00BFFF; /* Accent color for values */
-    display: flex;
+    color: #00BFFF;
+    display: flex; /* Use flex for value and button alignment */
     align-items: center;
     justify-content: center;
     gap: 5px;
+    flex-wrap: wrap; /* Allow wrapping if button is too long */
 }
 .stat-value .claim-btn {
-    background: #4CAF50; /* Green for claim button */
+    background: linear-gradient(90deg, #4CAF50 0%, #6BD070 100%); /* Green gradient for claim button */
     color: #FFFFFF;
-    padding: 5px 10px;
+    padding: 8px 15px; /* Adjusted padding */
     border-radius: 20px;
     font-size: 0.8em;
     margin-left: 10px;
     box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
     transition: background 0.2s ease, transform 0.2s ease;
+    white-space: nowrap; /* Prevent text wrap */
 }
 .stat-value .claim-btn:hover {
-    background: #388E3C;
+    background: linear-gradient(90deg, #388E3C 0%, #5CBF61 100%);
     transform: translateY(-1px);
 }
+
 
 /* Team Section Specifics */
 .team-section-title {
@@ -898,29 +940,29 @@ button {
 }
 .team-members-photos {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping for responsiveness */
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px; /* Space between images */
+    gap: 20px;
     margin-bottom: 40px;
 }
 .team-photo {
-    width: 100px; /* 1x1 size for images */
+    width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 10px; /* Slightly rounded corners */
-    border: 2px solid rgba(0, 191, 255, 0.3); /* Accent border */
+    border-radius: 10px;
+    border: 2px solid rgba(0, 191, 255, 0.3);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease-in-out, filter 0.5s ease; /* Smooth transition for blur and scale */
+    transition: all 0.3s ease-in-out, filter 0.5s ease;
     cursor: pointer;
 }
 .team-photo.blurred {
-    filter: blur(5px) grayscale(80%); /* Initial blur and desaturation */
+    filter: blur(5px) grayscale(80%);
 }
 .team-photo.elevated {
-    filter: blur(0) grayscale(0); /* Clear and colorful */
-    transform: scale(1.1) translateY(-10px); /* Slightly larger and lifted */
-    box-shadow: 0 10px 30px rgba(0, 191, 255, 0.6); /* Stronger glow when clear */
-    z-index: 1; /* Bring to front */
+    filter: blur(0) grayscale(0);
+    transform: scale(1.1) translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 191, 255, 0.6);
+    z-index: 1;
 }
 .contact-details {
     width: 90%;
@@ -929,7 +971,7 @@ button {
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    text-align: center; /* Center alignment for contact info */
+    text-align: center;
 }
 .contact-details h3 {
     font-size: 1.3em;
@@ -955,8 +997,9 @@ button {
     text-align: center;
     margin-top: 50px;
     padding: 20px 0;
-    background: #1A1A2E; /* Match body background */
+    background: #1A1A2E;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 99; /* Ensure it's above other elements if sticky/fixed */
 }
 .timer-label {
     font-size: 1.1em;
@@ -965,11 +1008,11 @@ button {
     font-weight: 500;
 }
 .timer-display {
-    font-family: 'Roboto Mono', monospace; /* Monospace for numbers */
+    font-family: 'Roboto Mono', monospace;
     font-size: 2.5em;
     font-weight: 700;
-    color: #4CAF50; /* Green for timer */
-    text-shadow: 0 0 10px rgba(76, 175, 80, 0.6); /* Green glow */
+    color: #4CAF50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
     letter-spacing: 2px;
 }
 .timer-note {
@@ -980,10 +1023,10 @@ button {
 
 /* Footer */
 footer {
-    margin-top: 40px; /* Reduced margin as global timer is above */
+    margin-top: auto; /* Push footer to bottom */
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px 0;
-    background: #1A1A2E; /* Match body background */
+    background: #1A1A2E;
 }
 .footer__wrapper {
     display: flex;
@@ -1000,7 +1043,6 @@ footer {
   width: 100%;
   height: 100%;
 }
-/* Ensure footer logo colors match header */
 .footer__logo svg path[fill="currentColor"] {
     fill: #00BFFF;
 }
@@ -1009,12 +1051,12 @@ footer {
     gap: 22px;
 }
 .footer__soc i {
-    color: #808080; /* Dimmer social icons */
+    color: #808080;
     font-size: 1.4em;
     transition: color 0.2s ease, transform 0.2s ease;
 }
 .footer__soc i:hover {
-    color: #00BFFF; /* Accent color on hover */
+    color: #00BFFF;
     transform: translateY(-2px);
 }
 
@@ -1024,7 +1066,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #0F0F1A; /* Very dark background for nav bar */
+    background: #0F0F1A;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
     z-index: 1000;
@@ -1043,45 +1085,32 @@ footer {
     padding: 8px 0;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    flex: 1; /* Distribute space evenly */
+    flex: 1;
 }
 .bottom-nav li i {
     font-size: 1.4em;
-    color: #808080; /* Default icon color */
+    color: #808080;
     margin-bottom: 5px;
     transition: color 0.2s ease;
 }
 .bottom-nav li span {
     font-size: 0.8em;
-    color: #808080; /* Default text color */
+    color: #808080;
     transition: color 0.2s ease;
 }
 .bottom-nav li.active {
-    background: rgba(0, 191, 255, 0.05); /* Subtle background for active tab */
-    border-radius: 5px; /* Slight rounding for active tab */
+    background: rgba(0, 191, 255, 0.05);
+    border-radius: 5px;
 }
 .bottom-nav li.active i,
 .bottom-nav li.active span {
-    color: #00BFFF; /* Accent color for active tab */
-    text-shadow: 0 0 8px rgba(0, 191, 255, 0.5); /* Glow for active icon/text */
+    color: #00BFFF;
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.5);
 }
 .bottom-nav li:hover {
     background: rgba(255, 255, 255, 0.05);
 }
 .bottom-nav li:hover i,
 .bottom-nav li:hover span {
-    color: #E0E0E0; /* Lighter on hover */
-}
-
-/* Loading Animation */
-.loading-animation, .checkmark-animation {
-    width: 100px; /* Size for in-page lottie animations */
-    height: 100px;
-    margin: 30px auto;
-}
-.loading-animation .loading-text {
-    text-align: center;
-    color: #B0B0B0;
-    font-size: 0.9em;
-    margin-top: 10px;
+    color: #E0E0E0;
 }
