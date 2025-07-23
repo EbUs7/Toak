@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. TON Connect Wallet & Rolls Logic ---
     const rollsInfoText = document.querySelector('.rolls-info-text');
-    const connectWalletBtnRolls = document.getElementById('connectWalletBtnRolls'); // Re-added custom button
-    const payForRollsBtn = document.getElementById('payForRollsBtn'); // Re-added custom button
+    const connectWalletBtnRolls = document.getElementById('connectWalletBtnRolls'); // Custom button
+    const payForRollsBtn = document.getElementById('payForRollsBtn'); // Custom button
     const codeEntrySection = document.querySelector('.code-entry-section');
     const confirmationCodeInput = document.getElementById('confirmationCodeInput');
     const verifyCodeBtn = document.getElementById('verifyCodeBtn');
@@ -82,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
             rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Pay 2 TON to roll!`;
             connectWalletBtnRolls.classList.add('hide'); // Hide connect button
             payForRollsBtn.classList.remove('hide'); // Show pay button
-            // Optionally, if there's an ongoing process, hide code entry/referral
+            
+            // Hide code entry/referral if wallet connects or disconnects (reset state)
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
 
@@ -130,10 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await tonConnectUI.sendTransaction(transaction);
             console.log('Transaction successful:', result);
             
-            // --- Simulate successful payment and spin ---
+            // --- Execute success simulation after actual transaction is sent ---
             loadingAnimation.classList.remove('hide');
-            payForRollsBtn.classList.add('hide');
-            rollsInfoText.classList.add('hide');
+            payForRollsBtn.classList.add('hide'); // Hide pay button during loading
+            rollsInfoText.classList.add('hide'); // Hide info text during loading
             
             // Spin the wheel
             spinningWheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
@@ -144,9 +145,9 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 loadingAnimation.classList.add('hide');
                 checkmarkAnimation.classList.remove('hide');
-                rollsInfoText.classList.remove('hide');
+                rollsInfoText.classList.remove('hide'); // Show info text again
                 rollsInfoText.textContent = 'Payment successful! Enter your code to claim your prize.';
-                codeEntrySection.classList.remove('hide');
+                codeEntrySection.classList.remove('hide'); // Show code entry
                 checkmarkAnimation.addEventListener('loopComplete', () => {
                     checkmarkAnimation.classList.add('hide');
                 }, { once: true });
@@ -156,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Transaction failed:', e);
             rollsInfoText.textContent = 'Payment failed. Please try again.';
             loadingAnimation.classList.add('hide'); // Hide loading if it was shown
-            payForRollsBtn.classList.remove('hide'); // Show pay button again
+            payForRollsBtn.classList.remove('hide'); // Show pay button again if transaction failed
         }
     });
     
