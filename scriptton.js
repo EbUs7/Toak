@@ -79,11 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
     tonConnectUI.onStatusChange(wallet => {
         if (wallet) {
             isWalletConnected = true;
-            rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Pay 2 TON to roll!`;
+            rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Now, pay 2 TON to roll!`;
             connectWalletBtnRolls.classList.add('hide'); // Hide connect button
+            // connectWalletBtnRolls.disabled = true; // Use hide/show classes
             payForRollsBtn.classList.remove('hide'); // Show pay button
+            payForRollsBtn.disabled = false; // Enable pay button
             
-            // Hide code entry/referral if wallet connects or disconnects (reset state)
+            // Hide code entry/referral if wallet connects (reset state)
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
 
@@ -91,7 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
             isWalletConnected = false;
             rollsInfoText.textContent = 'Connect your TON wallet to participate.';
             connectWalletBtnRolls.classList.remove('hide'); // Show connect button
+            // connectWalletBtnRolls.disabled = false;
             payForRollsBtn.classList.add('hide'); // Hide pay button
+            payForRollsBtn.disabled = true; // Disable pay button
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
         }
@@ -115,6 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
             rollsInfoText.textContent = 'Please connect your wallet first!';
             return;
         }
+
+        // Disable pay button to prevent multiple clicks during transaction
+        payForRollsBtn.disabled = true; 
 
         const transaction = {
             validUntil: Math.floor(Date.now() / 1000) + 360, // 6 minutes
@@ -158,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             rollsInfoText.textContent = 'Payment failed. Please try again.';
             loadingAnimation.classList.add('hide'); // Hide loading if it was shown
             payForRollsBtn.classList.remove('hide'); // Show pay button again if transaction failed
+            payForRollsBtn.disabled = false; // Re-enable pay button on failure
         }
     });
     
