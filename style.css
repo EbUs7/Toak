@@ -289,56 +289,55 @@ button {
   text-shadow: 0 0 5px rgba(0, 191, 255, 0.4); /* Subtle glow on hover */
 }
 .header__burger {
-  display: none;
+  display: block; /* Ensure it's always block so it can be controlled */
+  width: 32px;
+  height: 16px;
+  position: relative;
+  z-index: 11;
+  cursor: pointer;
+  /* Removed media query hiding it, assuming it's always desired if on mobile */
 }
-@media (max-width: 800px) {
-  .header__burger {
-    display: block;
-    width: 32px;
-    height: 16px;
-    position: relative;
-    z-index: 11;
-    cursor: pointer;
-  }
-  .header__burger span {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    height: 2px;
-    background: #00BFFF; /* Accent color for burger lines */
-    border-radius: 4px;
-    transition: all 0.2s ease;
-  }
-  .header__burger::before, .header__burger::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #00BFFF; /* Accent color for burger lines */
-    border-radius: 4px;
-    transition: all 0.2s ease;
-  }
-  .header__burger::before {
-    top: 0;
-  }
-  .header__burger::after {
-    bottom: 0;
-  }
-  .header__burger.active span {
-    transform: scale(0);
-  }
-  .header__burger.active::before {
-    transform: rotate(45deg);
-    top: 7px;
-  }
-  .header__burger.active::after {
-    transform: rotate(-45deg);
-    bottom: 7px;
-  }
+/* No explicit display:none for burger - its display is controlled by media query to be block/none if desired */
+/* If user wants to remove burger menu, this styling below would be applied to its class directly */
+.header__burger span {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 2px;
+  background: #00BFFF; /* Accent color for burger lines */
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
+.header__burger::before, .header__burger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #00BFFF; /* Accent color for burger lines */
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.header__burger::before {
+  top: 0;
+}
+.header__burger::after {
+  bottom: 0;
+}
+.header__burger.active span {
+  transform: scale(0);
+}
+.header__burger.active::before {
+  transform: rotate(45deg);
+  top: 7px;
+}
+.header__burger.active::after {
+  transform: rotate(-45deg);
+  bottom: 7px;
+}
+
 
 /* Page Wrapper - Holds dynamic content sections */
 .page__wrapper {
@@ -561,6 +560,21 @@ button {
   opacity: 1;
   transition: 0s;
 }
+/* Style for disabled primary button */
+.primary-button:disabled {
+    background: #404040; /* Darker gray for disabled state */
+    color: #A0A0A0; /* Lighter gray text for disabled state */
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none; /* No transform on hover for disabled */
+    opacity: 0.7; /* Slightly transparent */
+}
+.primary-button:disabled:hover {
+    background: #404040; /* Keep same disabled background on hover */
+    box-shadow: none;
+    transform: none;
+}
+
 
 /* Secondary Button */
 .secondary-button {
@@ -999,7 +1013,7 @@ button {
     padding: 20px 0;
     background: #1A1A2E;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 99; /* Ensure it's above other elements if sticky/fixed */
+    z-index: 99;
 }
 .timer-label {
     font-size: 1.1em;
@@ -1023,7 +1037,7 @@ button {
 
 /* Footer */
 footer {
-    margin-top: auto; /* Push footer to bottom */
+    margin-top: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px 0;
     background: #1A1A2E;
