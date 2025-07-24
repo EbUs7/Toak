@@ -69,10 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let isWalletConnected = false; // Track connection status
     let tonConnectUI; // Declare globally or in a scope accessible by init
 
-    // Initialize TON Connect UI - NO buttonRootId when using custom buttons
+    // Initialize TON Connect UI -- NO buttonRootId --
     tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
-        // No buttonRootId here, we handle the buttons manually
     });
 
     // Listen for TonConnectUI status changes
@@ -81,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isWalletConnected = true;
             rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Now, pay 2 TON to roll!`;
             connectWalletBtnRolls.classList.add('hide'); // Hide connect button
-            // connectWalletBtnRolls.disabled = true; // Use hide/show classes
             payForRollsBtn.classList.remove('hide'); // Show pay button
             payForRollsBtn.disabled = false; // Enable pay button
             
@@ -93,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isWalletConnected = false;
             rollsInfoText.textContent = 'Connect your TON wallet to participate.';
             connectWalletBtnRolls.classList.remove('hide'); // Show connect button
-            // connectWalletBtnRolls.disabled = false;
             payForRollsBtn.classList.add('hide'); // Hide pay button
             payForRollsBtn.disabled = true; // Disable pay button
             codeEntrySection.classList.add('hide');
