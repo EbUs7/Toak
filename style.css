@@ -612,7 +612,7 @@ button {
     align-items: center;
 }
 /* Container for Connect/Pay buttons */
-.rolls-buttons {
+.ton-connect-buttons-container { /* New class for TonConnectUI buttons container */
     display: flex; /* Use flex for side-by-side */
     justify-content: center; /* Center buttons horizontally */
     align-items: center;
@@ -622,6 +622,38 @@ button {
     margin-top: 25px; /* Space from info text */
     margin-bottom: 20px; /* Space before spinner */
 }
+/* Styling for buttons rendered by TonConnectUI inside our container */
+.ton-connect-buttons-container button {
+    /* These styles will override default TonConnectUI button styles */
+    background: linear-gradient(90deg, #00BFFF 0%, #007bff 100%) !important; /* Force gradient */
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    font-size: 1em !important; /* Smaller font size */
+    padding: 12px 25px !important; /* Smaller padding */
+    border-radius: 30px !important;
+    margin: 8px !important; /* Adjust margins */
+    flex: 1 !important;
+    min-width: 120px !important;
+    max-width: calc(50% - 12px) !important;
+    box-shadow: 0 8px 20px rgba(0, 191, 255, 0.4) !important;
+    transition: all 0.3s ease-in-out !important;
+    cursor: pointer !important;
+    height: auto !important; /* Override fixed height if any */
+}
+.ton-connect-buttons-container button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 25px rgba(0, 191, 255, 0.6) !important;
+    background: linear-gradient(90deg, #00CFFF 0%, #0088ff 100%) !important;
+}
+.ton-connect-buttons-container button:disabled {
+    background: #404040 !important;
+    color: #A0A0A0 !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    opacity: 0.7 !important;
+}
+
 
 .spinner-container {
     position: relative;
