@@ -80,8 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (wallet) {
             isWalletConnected = true;
             rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Now, pay 2 TON to roll!`;
-            connectWalletBtnRolls.classList.add('hide'); // Hide connect button
-            payForRollsBtn.classList.remove('hide'); // Show pay button
+            connectWalletBtnRolls.disabled = true; // Disable connect button
             payForRollsBtn.disabled = false; // Enable pay button
             
             // Hide code entry/referral if wallet connects (reset state)
@@ -91,8 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             isWalletConnected = false;
             rollsInfoText.textContent = 'Connect your TON wallet to participate.';
-            connectWalletBtnRolls.classList.remove('hide'); // Show connect button
-            payForRollsBtn.classList.add('hide'); // Hide pay button
+            connectWalletBtnRolls.disabled = false; // Enable connect button
             payForRollsBtn.disabled = true; // Disable pay button
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
@@ -138,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // --- Execute success simulation after actual transaction is sent ---
             loadingAnimation.classList.remove('hide');
-            payForRollsBtn.classList.add('hide'); // Hide pay button during loading
+            // payForRollsBtn.classList.add('hide'); // No longer hide, just disable
             rollsInfoText.classList.add('hide'); // Hide info text during loading
             
             // Spin the wheel
@@ -162,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Transaction failed:', e);
             rollsInfoText.textContent = 'Payment failed. Please try again.';
             loadingAnimation.classList.add('hide'); // Hide loading if it was shown
-            payForRollsBtn.classList.remove('hide'); // Show pay button again if transaction failed
+            // payForRollsBtn.classList.remove('hide'); // No longer hide
             payForRollsBtn.disabled = false; // Re-enable pay button on failure
         }
     });
