@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize TON Connect UI -- NO buttonRootId --
     tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
+        // No buttonRootId here, we handle the buttons manually
     });
 
     // Listen for TonConnectUI status changes
