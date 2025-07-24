@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize TON Connect UI -- NO buttonRootId --
     tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
-        // No buttonRootId here, we handle the buttons manually
     });
 
     // Listen for TonConnectUI status changes
@@ -136,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // --- Execute success simulation after actual transaction is sent ---
             loadingAnimation.classList.remove('hide');
-            // payForRollsBtn.classList.add('hide'); // No longer hide, just disable
             rollsInfoText.classList.add('hide'); // Hide info text during loading
             
             // Spin the wheel
@@ -160,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Transaction failed:', e);
             rollsInfoText.textContent = 'Payment failed. Please try again.';
             loadingAnimation.classList.add('hide'); // Hide loading if it was shown
-            // payForRollsBtn.classList.remove('hide'); // No longer hide
             payForRollsBtn.disabled = false; // Re-enable pay button on failure
         }
     });
