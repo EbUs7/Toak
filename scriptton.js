@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. TON Connect Wallet & Rolls Logic ---
     const rollsInfoText = document.querySelector('.rolls-info-text');
-    const connectWalletBtnRolls = document.getElementById('connectWalletBtnRolls'); // Re-added custom button
-    const payForRollsBtn = document.getElementById('payForRollsBtn'); // Re-added custom button
+    const connectWalletBtnRolls = document.getElementById('connectWalletBtnRolls'); // Custom button
+    const payForRollsBtn = document.getElementById('payForRollsBtn'); // Custom button
     const codeEntrySection = document.querySelector('.code-entry-section');
     const confirmationCodeInput = document.getElementById('confirmationCodeInput');
     const verifyCodeBtn = document.getElementById('verifyCodeBtn');
@@ -64,33 +64,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const referralAfterCodeMessage = document.querySelector('.referral-after-code-message');
     const loadingAnimation = document.querySelector('.loading-animation');
     const checkmarkAnimation = document.querySelector('.checkmark-animation');
-    const spinningWheel = document.querySelector('.spinning-wheel');
+    const spinningWheel = document = document.querySelector('.spinning-wheel');
 
     let isWalletConnected = false; // Track connection status
     let tonConnectUI; // Declare globally or in a scope accessible by init
 
-    // Initialize TON Connect UI - NO buttonRootId when using custom buttons
+    // Set initial button states on DOMContentLoaded
+    connectWalletBtnRolls.disabled = false; // Connect is enabled initially
+    payForRollsBtn.disabled = true; // Pay is disabled initially
+
+    // Initialize TON Connect UI -- NO buttonRootId --
     tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
-        // No buttonRootId here, we handle the buttons manually
     });
 
     // Listen for TonConnectUI status changes
     tonConnectUI.onStatusChange(wallet => {
         if (wallet) {
             isWalletConnected = true;
-            rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Pay 2 TON to roll!`;
-            connectWalletBtnRolls.classList.add('hide'); // Hide connect button
-            payForRollsBtn.classList.remove('hide'); // Show pay button
-            // Optionally, if there's an ongoing process, hide code entry/referral
+            rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Now, pay 2 TON to roll!`;
+            connectWalletBtnRolls.disabled = true; // Disable connect button
+            payForRollsBtn.disabled = false; // Enable pay button
+            
+            // Hide code entry/referral if wallet connects (reset state)
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
 
         } else {
             isWalletConnected = false;
             rollsInfoText.textContent = 'Connect your TON wallet to participate.';
-            connectWalletBtnRolls.classList.remove('hide'); // Show connect button
-            payForRollsBtn.classList.add('hide'); // Hide pay button
+            connectWalletBtnRolls.disabled = false; // Enable connect button
+            payForRollsBtn.disabled = true; // Disable pay button
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
         }
@@ -115,6 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Disable pay button to prevent multiple clicks during transaction
+        payForRollsBtn.disabled = true; 
+
         const transaction = {
             validUntil: Math.floor(Date.now() / 1000) + 360, // 6 minutes
             messages: [
@@ -130,10 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await tonConnectUI.sendTransaction(transaction);
             console.log('Transaction successful:', result);
             
-            // --- Simulate successful payment and spin ---
+            // --- Execute success simulation after actual transaction is sent ---
             loadingAnimation.classList.remove('hide');
-            payForRollsBtn.classList.add('hide');
-            rollsInfoText.classList.add('hide');
+            rollsInfoText.classList.add('hide'); // Hide info text during loading
             
             // Spin the wheel
             spinningWheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
@@ -144,9 +150,9 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 loadingAnimation.classList.add('hide');
                 checkmarkAnimation.classList.remove('hide');
-                rollsInfoText.classList.remove('hide');
+                rollsInfoText.classList.remove('hide'); // Show info text again
                 rollsInfoText.textContent = 'Payment successful! Enter your code to claim your prize.';
-                codeEntrySection.classList.remove('hide');
+                codeEntrySection.classList.remove('hide'); // Show code entry
                 checkmarkAnimation.addEventListener('loopComplete', () => {
                     checkmarkAnimation.classList.add('hide');
                 }, { once: true });
@@ -156,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Transaction failed:', e);
             rollsInfoText.textContent = 'Payment failed. Please try again.';
             loadingAnimation.classList.add('hide'); // Hide loading if it was shown
-            payForRollsBtn.classList.remove('hide'); // Show pay button again
+            payForRollsBtn.disabled = false; // Re-enable pay button on failure
         }
     });
     
