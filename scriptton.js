@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. TON Connect Wallet & Rolls Logic ---
     const rollsInfoText = document.querySelector('.rolls-info-text');
-    const connectWalletBtnRolls = document.getElementById('connectWalletBtnRolls'); // Custom button
+    // Removed connectWalletBtnRolls as it's now handled by tc-widget-root
     const payForRollsBtn = document.getElementById('payForRollsBtn'); // Custom button
     const codeEntrySection = document.querySelector('.code-entry-section');
     const confirmationCodeInput = document.getElementById('confirmationCodeInput');
@@ -64,18 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const referralAfterCodeMessage = document.querySelector('.referral-after-code-message');
     const loadingAnimation = document.querySelector('.loading-animation');
     const checkmarkAnimation = document.querySelector('.checkmark-animation');
-    const spinningWheel = document = document.querySelector('.spinning-wheel');
+    const spinningWheel = document.querySelector('.spinning-wheel'); // Corrected variable name
 
     let isWalletConnected = false; // Track connection status
     let tonConnectUI; // Declare globally or in a scope accessible by init
 
-    // Set initial button states on DOMContentLoaded
-    connectWalletBtnRolls.disabled = false; // Connect is enabled initially
-    payForRollsBtn.disabled = true; // Pay is disabled initially
-
-    // Initialize TON Connect UI -- NO buttonRootId --
+    // Initialize TON Connect UI with buttonRootId
     tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://tonairdrops.vercel.app/tonconnect-manifest.json',
+        buttonRootId: 'tc-widget-root' // This tells TonConnectUI where to render its button
     });
 
     // Listen for TonConnectUI status changes
@@ -83,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (wallet) {
             isWalletConnected = true;
             rollsInfoText.textContent = `Wallet connected: ${wallet.account.address.substring(0, 6)}...${wallet.account.address.substring(wallet.account.address.length - 4)}. Now, pay 2 TON to roll!`;
-            connectWalletBtnRolls.disabled = true; // Disable connect button
+            // connectWalletBtnRolls is no longer needed here as TonConnectUI manages its own button
             payForRollsBtn.disabled = false; // Enable pay button
             
             // Hide code entry/referral if wallet connects (reset state)
@@ -93,21 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             isWalletConnected = false;
             rollsInfoText.textContent = 'Connect your TON wallet to participate.';
-            connectWalletBtnRolls.disabled = false; // Enable connect button
+            // connectWalletBtnRolls is no longer needed here
             payForRollsBtn.disabled = true; // Disable pay button
             codeEntrySection.classList.add('hide');
             referralAfterCodeMessage.classList.add('hide');
-        }
-    });
-
-    // Custom Connect Wallet Button Click
-    connectWalletBtnRolls.addEventListener('click', async () => {
-        if (navigator.vibrate) { navigator.vibrate(50); } // Haptic feedback
-        try {
-            await tonConnectUI.openModal(); // Open the TonConnectUI modal
-        } catch (e) {
-            console.error('Wallet connection failed:', e);
-            rollsInfoText.textContent = 'Wallet connection failed. Please try again.';
         }
     });
 
