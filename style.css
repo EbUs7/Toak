@@ -519,18 +519,20 @@ button {
     background: linear-gradient(90deg, #00BFFF 0%, #007bff 100%);
     color: #FFFFFF;
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 1.1em; /* Standard size */
     text-align: center;
     padding: 16px 30px;
     border-radius: 30px;
-    margin-top: 20px;
-    width: 90%;
+    margin: 10px; /* Adjust margin for side-by-side */
+    flex: 1; /* Allow buttons to grow, but max-width below */
+    min-width: 120px; /* Minimum width for small screens */
+    max-width: calc(50% - 15px); /* For side-by-side: 50% minus gap/margins */
     box-shadow: 0 8px 20px rgba(0, 191, 255, 0.4);
     transition: all 0.3s ease-in-out;
     position: relative;
     overflow: hidden;
     letter-spacing: 0.5px;
-    cursor: pointer; /* Ensure cursor is pointer */
+    cursor: pointer;
 }
 .primary-button:hover {
     transform: translateY(-3px);
@@ -609,6 +611,27 @@ button {
     flex-direction: column;
     align-items: center;
 }
+/* Container for Connect/Pay buttons */
+.rolls-buttons {
+    display: flex; /* Use flex for side-by-side */
+    justify-content: center; /* Center buttons horizontally */
+    align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    gap: 15px; /* Space between buttons */
+    width: 100%;
+    margin-top: 25px; /* Space from info text */
+    margin-bottom: 20px; /* Space before spinner */
+}
+/* Ensure buttons are sized correctly within the flex container */
+.rolls-buttons .primary-button {
+    flex: 1; /* Allow to grow */
+    min-width: 130px; /* Ensure they don't get too small */
+    max-width: 48%; /* Roughly half width minus gap */
+    font-size: 0.95em; /* Slightly smaller font for compactness */
+    padding: 14px 25px; /* Slightly smaller padding */
+}
+
+
 .spinner-container {
     position: relative;
     width: 280px;
@@ -662,13 +685,6 @@ button {
     text-align: center;
     color: #B0B0B0;
     font-size: 1em;
-    margin-top: 20px;
-}
-.rolls-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
     margin-top: 20px;
 }
 .code-entry-section {
