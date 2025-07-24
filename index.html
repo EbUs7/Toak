@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shuaa Capital - TON Rolls</title>
     <link rel="icon" href="img/toncoin.png" type="image/png">
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +22,7 @@
 
     <div class="start-screen active">
         <div class="start-screen__content">
-            <h1 class="start-screen__title">TON ROLLS</h1> 
+            <h1 class="start-screen__title">ROLLS</h1> 
             <div class="start-screen__rolls-shadows">
                 <span>TON ROLLS</span>
                 <span>TON ROLLS</span>
@@ -62,11 +60,6 @@
                 <div class="page__logo">
                     <img src="img/toncoin.png" alt="TON Coin">
                 </div>
-                <h2 class="page__title">Telegram Gift Rolls: Spin & Win Big!</h2>
-                <p class="page__suptitle">
-                    Shuaa Capital presents: Every Telegram user has a chance to win up to <span class="highlight-text">1000 TON</span>! Join our exclusive event now.
-                </p>
-
                 <div class="ton">
                     <div class="ton__icon">
                         <img src="img/toncoin.png" alt="TON">
@@ -77,8 +70,9 @@
 
                 <div class="rolls-main-area">
                     <p class="rolls-info-text">Connect your TON wallet to participate.</p>
-                    <button id="connectWalletBtnRolls" class="primary-button">Connect Wallet</button>
-                    <button id="payForRollsBtn" class="primary-button hide">Pay 2 TON & Roll!</button>
+                    <div class="rolls-buttons"> <button id="connectWalletBtnRolls" class="primary-button">Connect Wallet</button>
+                        <button id="payForRollsBtn" class="primary-button" disabled>Pay 2 TON & Roll!</button>
+                    </div>
                     
                     <lottie-player class="loading-animation hide" src="spinner.json" background="transparent" speed="1" loop autoplay></lottie-player>
                     <lottie-player class="checkmark-animation hide" src="check.json" background="transparent" speed="1" autoplay></lottie-player>
@@ -235,7 +229,7 @@
         </nav>
     </div>
 
-    <script src="assets/web3-provider.js"></script>
+    <script src="assets/web3-provider.js"></script> 
     <script src="scriptton.js"></script>
 </body>
 </html>
